@@ -50,11 +50,10 @@ export default function InvestorsPage() {
     <>
       {/* Investors hero (uses InvestorsHero wrapper) */}
       <InvestorsHero
-        title="Investors"
-        intro="Key materials for shareholders, lenders and analysts."
-        imageSrc="/images/hero/investors-hero.jpg" // put your file in public/images/hero/
-        imageAlt="Investors"
-      />
+  title="Investors"
+  intro="Key materials for shareholders, lenders and analysts."
+  imageSrc="/images/hero/investors-hero.jpg"
+/>
 
       <div className="mx-auto max-w-6xl px-4 pb-10">
         {/* Featured investor briefing */}
