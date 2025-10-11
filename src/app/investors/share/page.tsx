@@ -19,7 +19,7 @@ export default function SharePage() {
         intro="Key information for current and prospective shareholders."
       />
       <main className="mx-auto max-w-6xl px-4 space-y-12">
-        <Breadcrumbs trail={trail} />
+       <Breadcrumbs items={trail} />
         <Section eyebrow="Snapshot" title="Share at a glance">
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <li className="rounded-2xl border p-4"><div className="text-xs uppercase opacity-70">Ticker</div><div className="text-xl font-semibold">BNOR</div></li>
@@ -38,7 +38,7 @@ export default function SharePage() {
             <p>IR contact details, email and phone.</p>
           </div>
         </Section>
-        <Breadcrumbs trail={trail} />
+        <Breadcrumbs items={trail} />
       </main>
     </div>
   );

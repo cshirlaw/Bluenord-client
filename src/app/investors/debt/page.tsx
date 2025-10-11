@@ -19,7 +19,7 @@ export default function DebtPage() {
         intro="Overview of bonds and financing."
       />
       <main className="mx-auto max-w-6xl px-4 space-y-12">
-        <Breadcrumbs trail={trail} />
+        <Breadcrumbs items={trail} />
         <Section eyebrow="Instruments" title="Capital structure">
           <div className="prose max-w-none">
             <p>Add bond terms, ranking, hedging and covenants.</p>
@@ -30,7 +30,7 @@ export default function DebtPage() {
             <p>Add a simple maturity table or chart here.</p>
           </div>
         </Section>
-        <Breadcrumbs trail={trail} />
+        <Breadcrumbs items={trail} />
       </main>
     </div>
   );

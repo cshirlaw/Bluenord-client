@@ -9,19 +9,47 @@ const HOME_LABEL = process.env.NEXT_PUBLIC_HOME_LABEL ?? 'HomeClient';
 // Optional: include breadcrumbs on /assets too
 const INCLUDE_ASSETS = true;
 
-// Optional: load pretty names from content map (fallbacks applied if missing)
-let PAGE_LABELS: Record<string, string> = {};
+// Accept both shapes:
+//  A) { "investors": { "title": "Investors", "body": [...] }, ... }
+//  B) { "/investors": "Investors", ... }
+type PagesJson =
+  | Record<string, { title?: string; body?: unknown }>
+  | Record<string, string>;
+
+let PAGES: PagesJson = {};
 try {
-  // If your tsconfig has "resolveJsonModule": true, this import works:
-  // @ts-expect-error - allow json import if TS isn't configured
-  PAGE_LABELS = require('@/src/content/pages.json');
-} catch {}
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  PAGES = require('@/content/pages.json') as PagesJson;
+} catch {
+  // No pages.json available — we'll fall back to titleized segments.
+}
 
 function titleize(s: string) {
   return s
     .replace(/[-_]+/g, ' ')
     .replace(/\b\w/g, (m) => m.toUpperCase())
     .replace(/\bQ(\d)\b/gi, 'Q$1');
+}
+
+function getPrettyLabel(seg: string): string {
+  // Support keys with and without leading slash
+  const k1 = seg.toLowerCase();        // e.g. "investors"
+  const k2 = '/' + k1;                 // e.g. "/investors"
+
+  // Shape B: direct string map
+  const asString =
+    (PAGES as Record<string, string>)[k1] ??
+    (PAGES as Record<string, string>)[k2];
+  if (typeof asString === 'string') return asString;
+
+  // Shape A: object with title
+  const asObj =
+    (PAGES as Record<string, { title?: string }>)[k1] ??
+    (PAGES as Record<string, { title?: string }>)[k2];
+  if (asObj?.title) return asObj.title;
+
+  // Fallback
+  return titleize(seg);
 }
 
 export default function BreadcrumbsGate() {
@@ -40,8 +68,7 @@ export default function BreadcrumbsGate() {
     { href: '/', label: HOME_LABEL },
     ...parts.map((seg, i) => {
       const href = '/' + parts.slice(0, i + 1).join('/');
-      const key = '/' + seg.toLowerCase();
-      const label = PAGE_LABELS[key] || titleize(seg);
+      const label = getPrettyLabel(seg);
       const current = i === parts.length - 1;
       return { href, label, current };
     }),

@@ -15,13 +15,13 @@ export default function GovernancePage() {
         intro="Risk management, integrity and accountability."
       />
       <main className="mx-auto max-w-6xl px-4 space-y-12">
-        <Breadcrumbs trail={trail} />
+        <Breadcrumbs items={trail} />
         <Section eyebrow="Overview" title="Our governance framework">
           <div className="prose max-w-none">
             <p>Add your copy for governance here.</p>
           </div>
         </Section>
-        <Breadcrumbs trail={trail} />
+        <Breadcrumbs items={trail} />
       </main>
     </div>
   );
