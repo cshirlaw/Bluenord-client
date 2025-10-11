@@ -44,7 +44,7 @@ const MENU: MenuGroup[] = [
     items: [
       { href: '/investors', label: 'Overview' },
       { href: '/investors/reports', label: 'Reports' },
-      { href: '/investors/presentations', label: 'Presentations' },
+      { href: '/investors/presentations', label: 'Presentations' }, // normalized to /financials below
       { href: '/investors/financial-calendar', label: 'Financial Calendar' },
       { href: '/investors/share', label: 'Share' },
       { href: '/investors/debt', label: 'Debt' },
@@ -64,6 +64,10 @@ const MENU: MenuGroup[] = [
   },
 ];
 
+// Force Presentations → /financials
+const normalizeHref = (item: { href: string; label: string }) =>
+  item.label === 'Presentations' ? '/financials' : item.href;
+
 export default function TopNav() {
   const pathname = usePathname() || '/';
   const [openKey, setOpenKey] = useState<string | null>(null);     // desktop dropdown
@@ -72,7 +76,7 @@ export default function TopNav() {
   const scrolled = useScrolled(8);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const isActive = (href: string) =>
+  const isActiveTop = (href: string) =>
     pathname === href || pathname.startsWith(href + '/');
 
   // Header frame
@@ -154,7 +158,7 @@ export default function TopNav() {
         {/* Desktop nav */}
         <nav className="relative ml-auto hidden items-center gap-2 text-sm md:flex">
           {MENU.map((m) => {
-            const active = isActive(m.href);
+            const activeTop = isActiveTop(m.href);
             const hasDropdown = (m.items?.length ?? 0) > 0;
 
             if (!hasDropdown) {
@@ -162,8 +166,8 @@ export default function TopNav() {
                 <Link
                   key={m.key}
                   href={m.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={linkClass(active)}
+                  aria-current={activeTop ? 'page' : undefined}
+                  className={linkClass(activeTop)}
                 >
                   {m.label}
                 </Link>
@@ -185,8 +189,8 @@ export default function TopNav() {
                   href={m.href}
                   aria-expanded={openKey === m.key}
                   aria-haspopup="menu"
-                  aria-current={active ? 'page' : undefined}
-                  className={linkClass(active)}
+                  aria-current={activeTop ? 'page' : undefined}
+                  className={linkClass(activeTop)}
                 >
                   {m.label}
                 </Link>
@@ -194,7 +198,7 @@ export default function TopNav() {
                 {/* Hover bridge */}
                 <div className="pointer-events-none absolute left-0 top-full h-2 w-64" />
 
-                {/* Dropdown */}
+                {/* Dropdown (children have NO active styling — hover only) */}
                 {openKey === m.key && (
                   <div
                     role="menu"
@@ -203,16 +207,13 @@ export default function TopNav() {
                     className="pointer-events-auto absolute left-0 top-[calc(100%+8px)] z-50 w-64 rounded-xl border bg-white/95 p-2 shadow-lg backdrop-blur-sm"
                   >
                     {m.items!.map((a) => {
-                      const itemActive = isActive(a.href);
+                      const hrefResolved = normalizeHref(a);
                       return (
                         <Link
                           key={a.href}
-                          href={a.href}
+                          href={hrefResolved}
                           role="menuitem"
-                          className={[
-                            'block rounded-lg px-3 py-1.5 transition-colors',
-                            itemActive ? 'bg-brand-50 text-brand-800' : 'text-slate-700 hover:bg-slate-50',
-                          ].join(' ')}
+                          className="block rounded-lg px-3 py-1.5 text-slate-700 hover:bg-slate-50 transition-colors"
                           onClick={() => setOpenKey(null)}
                         >
                           {a.label}
@@ -280,7 +281,6 @@ export default function TopNav() {
           <nav className="mx-auto max-w-6xl px-4 pb-6">
             <ul className="divide-y divide-slate-200 rounded-2xl border border-slate-200 overflow-hidden">
               {MENU.map((m) => {
-                const active = isActive(m.href);
                 const hasChildren = (m.items?.length ?? 0) > 0;
                 const open = mobileSection === m.key;
 
@@ -290,10 +290,7 @@ export default function TopNav() {
                       <Link
                         href={m.href}
                         onClick={() => setMobileOpen(false)}
-                        className={[
-                          'flex items-center justify-between px-4 py-3 text-sm',
-                          active ? 'bg-brand-50 text-brand-800' : 'text-slate-800 hover:bg-slate-50'
-                        ].join(' ')}
+                        className="flex items-center justify-between px-4 py-3 text-sm text-slate-800 hover:bg-slate-50"
                       >
                         <span>{m.label}</span>
                       </Link>
@@ -318,16 +315,13 @@ export default function TopNav() {
                     {open && (
                       <div className="bg-slate-50">
                         {m.items!.map((a) => {
-                          const itemActive = isActive(a.href);
+                          const hrefResolved = normalizeHref(a);
                           return (
                             <Link
                               key={a.href}
-                              href={a.href}
+                              href={hrefResolved}
                               onClick={() => setMobileOpen(false)}
-                              className={[
-                                'block px-6 py-2.5 text-sm',
-                                itemActive ? 'text-brand-800' : 'text-slate-700 hover:bg-white'
-                              ].join(' ')}
+                              className="block px-6 py-2.5 text-sm text-slate-700 hover:bg-white"
                             >
                               {a.label}
                             </Link>

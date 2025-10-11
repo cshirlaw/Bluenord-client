@@ -68,24 +68,29 @@ export default function FinancialsPage() {
         </p>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          {/* Q3 2025 (EXPLICIT CARD) */}
+          {/* Q3 2025 → Pareto interactive */}
           <Link
-            href="/financials/q3-2025"
-            className="block rounded-2xl border p-5 transition hover:bg-gray-50"
+            href="/investors/briefings/pareto-2025-09"
+            aria-label="Open Q3 2025 interactive presentation"
+            className="block rounded-2xl border p-5 transition hover:bg-gray-50 focus:outline-none focus:ring"
             style={{ borderColor: BRAND.border }}
           >
             <div className="text-sm font-semibold" style={{ color: BRAND.text }}>
               Q3 2025 presentation (interactive)
             </div>
             <div className="mt-1 text-xs" style={{ color: BRAND.subtext }}>
-              XLSX → JSON powered page with production & hedge charts.
+              XLSX → JSON powered page with production &amp; hedge charts.
+            </div>
+            <div className="mt-3 text-sm underline underline-offset-4 text-blue-700">
+              Open interactive presentation →
             </div>
           </Link>
 
           {/* Q2 2025 */}
           <Link
             href="/financials/q2-2025"
-            className="block rounded-2xl border p-5 transition hover:bg-gray-50"
+            aria-label="Open Q2 2025 interactive presentation"
+            className="block rounded-2xl border p-5 transition hover:bg-gray-50 focus:outline-none focus:ring"
             style={{ borderColor: BRAND.border }}
           >
             <div className="text-sm font-semibold" style={{ color: BRAND.text }}>
@@ -93,6 +98,9 @@ export default function FinancialsPage() {
             </div>
             <div className="mt-1 text-xs" style={{ color: BRAND.subtext }}>
               Production outlook and hedge portfolio snapshots.
+            </div>
+            <div className="mt-3 text-sm underline underline-offset-4 text-blue-700">
+              Open interactive presentation →
             </div>
           </Link>
         </div>
@@ -107,8 +115,9 @@ export default function FinancialsPage() {
             href="/reports/2025/BlueNord_ASA_Pareto_Securities_Energy_Conference_10_September_2025.pdf"
             target="_blank"
             rel="noreferrer"
-            className="block rounded-2xl border p-5 transition hover:bg-gray-50"
+            className="block rounded-2xl border p-5 transition hover:bg-gray-50 focus:outline-none focus:ring"
             style={{ borderColor: BRAND.border }}
+            aria-label="Open Pareto Securities Energy Conference PDF in a new tab"
           >
             <div className="text-sm font-semibold" style={{ color: BRAND.text }}>
               Pareto Securities Energy Conference (10 Sep 2025) — PDF
@@ -121,7 +130,8 @@ export default function FinancialsPage() {
           {/* Reports & Results hub */}
           <Link
             href="/investors/reports"
-            className="block rounded-2xl border p-5 transition hover:bg-gray-50"
+            aria-label="Open Reports and Results"
+            className="block rounded-2xl border p-5 transition hover:bg-gray-50 focus:outline-none focus:ring"
             style={{ borderColor: BRAND.border }}
           >
             <div className="text-sm font-semibold" style={{ color: BRAND.text }}>
@@ -129,6 +139,9 @@ export default function FinancialsPage() {
             </div>
             <div className="mt-1 text-xs" style={{ color: BRAND.subtext }}>
               Browse annual reports, quarterly results, and investor decks.
+            </div>
+            <div className="mt-3 text-sm underline underline-offset-4 text-blue-700">
+              Browse reports →
             </div>
           </Link>
         </div>

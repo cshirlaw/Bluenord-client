@@ -72,7 +72,7 @@ type BlocksDoc = { slides: Slide[] };
 /* ----------------------------- UI bits ----------------------------- */
 function Breadcrumbs({ items, className = '' }: { items: { href: string; label: string }[]; className?: string }) {
   return (
-    <nav aria-label="Breadcrumb" className={`text-xs md:text-sm ${className}`}>
+    <nav aria-label="Breadcrumb" className={`text-[11px] md:text-sm ${className}`}>
       <ol className="flex flex-wrap items-center gap-1 md:gap-1.5 text-gray-500">
         {items.map((it, i) => (
           <li key={it.href} className="flex items-center gap-1 md:gap-1.5">
@@ -91,23 +91,63 @@ function Breadcrumbs({ items, className = '' }: { items: { href: string; label: 
 
 function Section({ title, children }: { title?: string; children: React.ReactNode }) {
   return (
-    <section className="mt-8 rounded-2xl border bg-white/70 p-5 shadow-sm" style={{ borderColor: BRAND.border }}>
-      {title && <h2 className="text-xl font-semibold" style={{ color: BRAND.text }}>{title}</h2>}
-      <div className={title ? 'mt-4' : ''}>{children}</div>
+    <section className="mt-6 sm:mt-8 rounded-2xl border bg-white/70 p-4 sm:p-5 shadow-sm" style={{ borderColor: BRAND.border }}>
+      {title && <h2 className="text-lg sm:text-xl font-semibold" style={{ color: BRAND.text }}>{title}</h2>}
+      <div className={title ? 'mt-3 sm:mt-4' : ''}>{children}</div>
     </section>
   );
 }
 
 function KPI({ label, value, unit, hint }: { label: string; value: string; unit?: string; hint?: string }) {
   return (
-    <div className="rounded-2xl border p-4 h-full" style={{ borderColor: BRAND.border }}>
-      <div className="text-sm" style={{ color: BRAND.subtext }}>{label}</div>
-      <div className="mt-1 text-2xl font-semibold" style={{ color: BRAND.text }}>
-        {value}{unit ? <span className="ml-1 text-base font-normal">{unit}</span> : null}
+    <div className="rounded-2xl border p-3 sm:p-4 h-full" style={{ borderColor: BRAND.border }}>
+      <div className="text-xs sm:text-sm" style={{ color: BRAND.subtext }}>{label}</div>
+      <div className="mt-1 text-xl sm:text-2xl font-semibold" style={{ color: BRAND.text }}>
+        {value}{unit ? <span className="ml-1 text-sm sm:text-base font-normal">{unit}</span> : null}
       </div>
-      {hint && <div className="mt-1 text-xs" style={{ color: BRAND.subtext }}>{hint}</div>}
+      {hint && <div className="mt-1 text-[11px] sm:text-xs" style={{ color: BRAND.subtext }}>{hint}</div>}
     </div>
   );
+}
+
+/* ----------------------------- Format helper ----------------------------- */
+function formatValue(v: any, unit?: string) {
+  const num = typeof v === 'number' ? v : Number(v);
+  if (!Number.isFinite(num)) return String(v ?? '');
+  const u = unit?.trim() ?? '';
+
+  // Percentage
+  if (u === '%' || /percent/i.test(u)) return `${num.toFixed(1)}%`;
+
+  // Currency rules
+  const isUsdPlain = /^usd(\/.+)?$/i.test(u);              // USD, USD/bbl, USD/MWh
+  const isUsdMillions = /(usd\s*m+m?)|(m\s*usd)/i.test(u); // USD m, USDmm, m USD
+
+  if (isUsdPlain) {
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 0,
+    }).format(num);
+  }
+  if (isUsdMillions) {
+    const formatted = new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 1,
+      minimumFractionDigits: 0,
+    }).format(num);
+    return `${formatted} m`;
+  }
+
+  // boe/d compact
+  if (/boe\/d|boe\/day|mboe\/d/i.test(u)) {
+    return `${new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 2 }).format(num)} ${u}`;
+  }
+
+  // Default compact
+  return new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 2 }).format(num);
 }
 
 /* ----------------------------- Charts ----------------------------- */
@@ -116,7 +156,7 @@ function Donut({ item }: { item: Extract<ChartsRowItem, { kind: 'donut' }> }) {
   return (
     <div className="w-full">
       <div className="mb-2 text-sm font-medium" style={{ color: BRAND.text }}>{item.title}</div>
-      <div className="h-56">
+      <div className="h-48 sm:h-56">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Tooltip formatter={(v: any) => [`${v}`, '']} />
@@ -143,13 +183,13 @@ function Radial({ item }: { item: Extract<ChartsRowItem, { kind: 'radial' }> }) 
   return (
     <div className="w-full">
       <div className="mb-2 text-sm font-medium" style={{ color: BRAND.text }}>{item.title}</div>
-      <div className="h-56">
+      <div className="h-48 sm:h-56">
         <ResponsiveContainer width="100%" height="100%">
           <RadialBarChart innerRadius="45%" outerRadius="85%" data={data} startAngle={90} endAngle={-270}>
             <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
             <Tooltip formatter={(v: any, _n: any, p: any) => [`${(p.payload.percent).toFixed(1)}%`, p.payload.name]} />
             <Legend />
-            {/* NOTE: removed unsupported `clockWise` prop for build stability */}
+            {/* No `clockWise` prop for build safety */}
             <RadialBar background dataKey="percent" cornerRadius={8}>
               {data.map((d, i) => <Cell key={i} fill={d.fill} />)}
             </RadialBar>
@@ -163,18 +203,15 @@ function Radial({ item }: { item: Extract<ChartsRowItem, { kind: 'radial' }> }) 
 
 /** 100% stacked bar (horizontal) — sorted largest→smallest with centered labels + custom legend */
 function Stacked100({ item }: { item: Extract<ChartsRowItem, { kind: 'stacked100' }> }) {
-  // Sort slices by value desc to control left→right order + legend order
   const sorted = [...item.slices].sort((a, b) => b.value - a.value);
   const total = sorted.reduce((a, s) => a + s.value, 0) || 1;
 
-  // Build single-row dataset with percentage values
   const row: Record<string, number | string> = { name: 'Ownership' };
   sorted.forEach((s) => {
     row[s.label] = (s.value / total) * 100;
   });
   const data = [row];
 
-  // Centered label renderer (adapts to available width)
   function renderInsideLabel(props: any, label: string) {
     const { x = 0, y = 0, width = 0, height = 0, value = 0 } = props || {};
     if (width <= 0 || height <= 0) return null;
@@ -220,7 +257,6 @@ function Stacked100({ item }: { item: Extract<ChartsRowItem, { kind: 'stacked100
             <XAxis type="number" domain={[0, 100]} hide />
             <YAxis type="category" dataKey="name" hide />
             <Tooltip formatter={(v: any, name: string) => [`${Number(v).toFixed(1)}%`, name]} />
-            {/* No default <Legend/>; we render a custom one below */}
             {sorted.map((s, i) => (
               <Bar key={s.label} dataKey={s.label} stackId="a" fill={CHART.palette[i % CHART.palette.length]}>
                 <LabelList dataKey={s.label} content={(p: any) => renderInsideLabel(p, s.label)} />
@@ -230,7 +266,7 @@ function Stacked100({ item }: { item: Extract<ChartsRowItem, { kind: 'stacked100
         </ResponsiveContainer>
       </div>
 
-      {/* Custom legend/description line in sorted order */}
+      {/* Custom legend/description line */}
       <div className="mt-2 flex flex-wrap items-center gap-3 text-xs">
         {sorted.map((s, i) => (
           <span key={s.label} className="inline-flex items-center gap-1">
@@ -259,7 +295,7 @@ function SimpleBar({ item }: { item: Extract<ChartsRowItem, { kind: 'bar' }> }) 
   return (
     <div className="w-full">
       <div className="mb-2 text-sm font-medium" style={{ color: BRAND.text }}>{item.title}</div>
-      <div className="h-56">
+      <div className="h-48 sm:h-56">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ left: 8, right: 16, top: 8, bottom: 8 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={CHART.grid} />
@@ -272,16 +308,19 @@ function SimpleBar({ item }: { item: Extract<ChartsRowItem, { kind: 'bar' }> }) 
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-2 text-xs" style={{ color: BRAND.subtext }}>{item.unit ? `Unit: {item.unit}. ` : ''}{item.notes ?? ''}</div>
+      <div className="mt-2 text-xs" style={{ color: BRAND.subtext }}>
+        {item.unit ? `Unit: ${item.unit}. ` : ''}{item.notes ?? ''}
+      </div>
     </div>
   );
 }
 
 /* ----------------------------- Bar/Line Combo ----------------------------- */
-/** Generic bar+line combo that lets us name both series (so Tyra != Hedging). */
+/** Bar (left axis) + Line (right axis) with proper unit-aware tooltips. */
 function BarLine({
   title,
-  unit,
+  unit,                 // left axis unit
+  rightUnit,            // right axis unit (e.g., 'USD/bbl')
   series,
   spot,
   leftLabel = 'Series A',
@@ -289,47 +328,59 @@ function BarLine({
   unitLabelText = 'Left axis unit:',
 }: {
   title: string;
-  unit?: string;
+  unit?: string;                 // left axis unit
+  rightUnit?: string;            // right axis unit
   series: { label: string; left: number; right: number }[];
   spot?: number;
   leftLabel?: string;
   rightLabel?: string;
   unitLabelText?: string;
 }) {
+  const empty = series.length === 0;
+
   return (
     <div className="w-full">
       <div className="mb-2 text-sm font-medium" style={{ color: BRAND.text }}>{title}</div>
-      <div className="h-72">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={series} margin={{ left: 8, right: 16, top: 8, bottom: 8 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={CHART.grid} />
-            <XAxis dataKey="label" />
-            <YAxis yAxisId="L" />
-            <YAxis yAxisId="R" orientation="right" />
-            <Tooltip />
-            <Legend />
-            <Bar
-              yAxisId="L"
-              dataKey="left"
-              name={leftLabel}
-              radius={[6, 6, 0, 0]}
-            />
-            <Line
-              yAxisId="R"
-              type="monotone"
-              dataKey="right"
-              name={rightLabel}
-              stroke={BRAND.accent}
-              strokeWidth={2.5}
-              dot={{ r: 2 }}
-              activeDot={{ r: 4 }}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="h-64 sm:h-72">
+        {empty ? (
+          <div className="flex h-full items-center justify-center text-sm" style={{ color: BRAND.subtext }}>
+            No data
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={series} margin={{ left: 8, right: 16, top: 8, bottom: 8 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={CHART.grid} />
+              <XAxis dataKey="label" />
+              <YAxis yAxisId="L" />
+              <YAxis yAxisId="R" orientation="right" />
+              <Tooltip
+                formatter={(value: any, name: any) => {
+                  const isRight = String(name).toLowerCase() === String(rightLabel).toLowerCase();
+                  const u = isRight ? rightUnit : unit;
+                  return [formatValue(value, u), name];
+                }}
+              />
+              <Legend />
+              <Bar yAxisId="L" dataKey="left" name={leftLabel} radius={[6, 6, 0, 0]} />
+              <Line
+                yAxisId="R"
+                type="monotone"
+                dataKey="right"
+                name={rightLabel}
+                stroke={BRAND.accent}
+                strokeWidth={2.5}
+                dot={{ r: 2 }}
+                activeDot={{ r: 4 }}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
-      {unit && (
+      {(unit || rightUnit) && (
         <div className="mt-2 text-xs" style={{ color: BRAND.subtext }}>
-          {unitLabelText} {unit}
+          {unit ? `${unitLabelText} ${unit}` : ''}
+          {unit && rightUnit ? ' · ' : ''}
+          {rightUnit ? `Right axis unit: ${rightUnit}` : ''}
         </div>
       )}
       {typeof spot === 'number' && (
@@ -356,24 +407,25 @@ function HedgeTabs({ block }: { block: Extract<Block, { type: 'hedgeTabs' }> }) 
       </div>
 
       {/* Tabs */}
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 flex gap-2 overflow-x-auto">
         {(['oil','gas'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`rounded-xl border px-3 py-1.5 text-sm ${tab === t ? 'bg-gray-100' : ''}`}
-            style={{ borderColor: BRAND.border, color: BRAND.text }}
+            className={`rounded-xl border px-3 py-1.5 text-sm ${tab === t ? 'bg-gray-100' : 'bg-white'}`}
+            style={{ borderColor: BRAND.border, color: BRAND.text, whiteSpace: 'nowrap' }}
           >
             {t === 'oil' ? 'Oil' : 'Gas'}
           </button>
         ))}
       </div>
 
-      {/* Chart — keep hedging wording */}
+      {/* Chart — hedged volume (bars, left) & price/floor (line, right) */}
       <div className="mt-4">
         <BarLine
           title={`${tab === 'oil' ? 'Oil' : 'Gas'} hedged volume & price`}
-          unit={active.unitVolume}
+          unit={active.unitVolume}         // left axis (volume)
+          rightUnit={active.unitPrice}     // right axis (price), e.g. 'USD/bbl'
           unitLabelText="Left axis unit:"
           series={series}
           spot={active.spot}
@@ -488,16 +540,16 @@ function BlockRenderer({ block }: { block: Block }) {
             <div className="relative">
               {/* Background image */}
               <img src={block.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
-              {/* Brightening veil for stronger dark-text contrast */}
+              {/* Brightening veil for stronger dark-text contrast (keeps mobile legibility) */}
               <div className="absolute inset-0 bg-white/40" />
               {/* Bottom fade for readability */}
               <div
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-28 sm:h-32"
                 style={{ background: 'linear-gradient(0deg, rgba(255,255,255,0.92), rgba(255,255,255,0))' }}
               />
               {/* Content */}
-              <div className="relative z-10 min-h-[240px] p-6 md:p-7">
-                <h1 className="text-2xl font-semibold" style={{ color: BRAND.primary }}>{block.title}</h1>
+              <div className="relative z-10 min-h-[200px] sm:min-h-[240px] p-5 sm:p-6 md:p-7">
+                <h1 className="text-xl sm:text-2xl font-semibold" style={{ color: BRAND.primary }}>{block.title}</h1>
                 {block.subtitle && (
                   <p className="mt-2 max-w-3xl text-sm" style={{ color: BRAND.text }}>
                     {block.subtitle}
@@ -558,7 +610,7 @@ function BlockRenderer({ block }: { block: Block }) {
       );
 
     case 'barLine':
-      // Tyra production: Average vs Peak production (both in mboe/d)
+      // Average vs Peak (mapped to left vs right series names for clarity)
       return (
         <BarLine
           title={block.title}
@@ -595,10 +647,10 @@ export default function ParetoBriefingBlocks() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
       {/* Header crumbs */}
       <Breadcrumbs
-        className="mb-4"
+        className="mb-3 sm:mb-4"
         items={[
           { href: '/', label: 'Home' },
           { href: '/investors', label: 'Investors' },
@@ -613,7 +665,7 @@ export default function ParetoBriefingBlocks() {
       ) : (
         doc.slides.map((s) => (
           <Section key={s.id} title={s.title}>
-            <div className="grid gap-5">
+            <div className="grid gap-4 sm:gap-5">
               {s.blocks.map((b, i) => <BlockRenderer key={i} block={b} />)}
             </div>
           </Section>
@@ -622,7 +674,7 @@ export default function ParetoBriefingBlocks() {
 
       {/* Footer crumbs */}
       <Breadcrumbs
-        className="mt-10"
+        className="mt-8 sm:mt-10"
         items={[
           { href: '/', label: 'Home' },
           { href: '/investors', label: 'Investors' },
