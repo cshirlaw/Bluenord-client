@@ -5,27 +5,42 @@ import { Inter } from "next/font/google";
 import TopNav from "@/components/TopNav";
 import SiteFooter from "@/components/SiteFooter";
 import BreadcrumbsGate from "@/components/BreadcrumbsGate";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: { default: "BlueNord", template: "BlueNord — %s" },
-  description: "Focused North Sea operator. Investor information, reports and assets.",
-  metadataBase: new URL("https://bluenord-clean.vercel.app"),
+// Env-driven identity (set in .env.local or Vercel)
+//   NEXT_PUBLIC_SITE_NAME=BlueNord Client
+//   NEXT_PUBLIC_HOME_LABEL=HomeClient
+//   NEXT_PUBLIC_SITE_URL=https://bluenord-client.vercel.app   (optional, used for OG URLs)
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? "BlueNord Client";
+const SITE_DESC =
+  "Focused North Sea operator. Investor information, reports and assets.";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bluenord-client.vercel.app";
+const OG_IMAGE = "/images/hero-offshore.png";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `${SITE_NAME} — %s`,
+  },
+  description: SITE_DESC,
   icons: { icon: "/favicon.svg" },
   openGraph: {
-    title: "BlueNord",
-    description: "Focused North Sea operator. Investor information, reports and assets.",
-    url: "https://bluenord-clean.vercel.app",
-    siteName: "BlueNord",
-    images: [{ url: "/images/hero-offshore.png", width: 1200, height: 630, alt: "BlueNord" }],
+    title: SITE_NAME,
+    description: SITE_DESC,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
     locale: "en_GB",
-    type: "website"
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlueNord",
-    description: "Focused North Sea operator. Investor information, reports and assets.",
-    images: ["/images/hero-offshore.png"]
-  }
+    title: SITE_NAME,
+    description: SITE_DESC,
+    images: [OG_IMAGE],
+  },
 };
 
 const inter = Inter({ subsets: ["latin"] });

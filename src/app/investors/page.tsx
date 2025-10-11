@@ -19,7 +19,7 @@ const BRAND = {
 /* ------------------------------------------------------------------ */
 const BRIEFING = {
   slug: '/investors/briefings/pareto-2025-09',
-  title: 'Investor Briefing — Pareto Energy Conference (Sep 2025)',
+  title: 'Investor Briefing — Energy Conference Sep 2025',
   summary:
     'Web-style version of the September 10, 2025 presentation. Interactive charts on production, hedging and distributions.',
   logo: '/images/brand/bluenord-logo-260925.png',

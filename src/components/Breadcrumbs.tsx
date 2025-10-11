@@ -1,25 +1,31 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
+import Link from 'next/link';
 
-export type Crumb = { label: string; href?: string };
+export type Crumb = { href: string; label: string; current?: boolean };
 
-export default function Breadcrumbs({ trail = [] as Crumb[] }: { trail?: Crumb[] }) {
-  if (!trail.length) return null;
+export default function Breadcrumbs({ items }: { items: Crumb[] }) {
+  if (!items?.length) return null;
+
   return (
-    <nav aria-label="Breadcrumb" className="text-sm">
-      <ol className="flex flex-wrap items-center gap-1 text-gray-600">
-        {trail.map((c, i) => {
-          const last = i === trail.length - 1;
+    <nav aria-label="Breadcrumb" className="bg-white">
+      <ol className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-2 text-sm text-gray-600">
+        {items.map((c, i) => {
+          const isLast = i === items.length - 1;
           return (
-            <li key={`${c.label}-${i}`} className="inline-flex items-center gap-1">
-              {c.href && !last ? (
-                <Link href={c.href} className="hover:underline">{c.label}</Link>
+            <li key={c.href} className="flex items-center gap-2">
+              {i > 0 && <span className="text-gray-300">/</span>}
+              {isLast ? (
+                <span className="text-gray-900">{c.label}</span>
               ) : (
-                <span className="font-medium text-gray-900">{c.label}</span>
+                <Link
+                  href={c.href}
+                  className="hover:text-gray-900"
+                  aria-current={c.current ? 'page' : undefined}
+                >
+                  {c.label}
+                </Link>
               )}
-              {!last && <span className="opacity-60">/</span>}
             </li>
           );
         })}

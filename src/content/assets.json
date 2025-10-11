@@ -1,8 +1,57 @@
 {
-  "hero": { "title": "Assets", "intro": "Overview of our core producing fields and key projects." },
+  "hero": {
+    "title": "Assets",
+    "lede": "Overview of our core producing fields and key projects."
+  },
   "items": [
-    { "name": "Danish Underground Consortium (DUC)", "location": "Danish North Sea", "status": "Producing", "blurb": "Mature assets with ongoing optimisation and infill opportunities." },
-    { "name": "Project X", "location": "North Sea", "status": "Development", "blurb": "Brownfield upgrade delivering efficiency and lower emissions." },
-    { "name": "Exploration Area A", "location": "—", "status": "Exploration", "blurb": "High-graded prospects under review." }
+    {
+      "id": "tyra",
+      "name": "Tyra",
+      "summary": "Flagship redevelopment and key gas hub in the Danish North Sea.",
+      "image": "/images/assets/tyra/tyra-original.jpg",
+      "alt": "Tyra field",
+      "videoSrc": "",
+      "photos": [
+        { "src": "/images/assets/tyra/tyra-original.jpg", "alt": "Tyra hero" }
+      ]
+    },
+    {
+      "id": "halfdan",
+      "name": "Halfdan",
+      "summary": "Large producing complex focused on infill drilling and optimisation.",
+      "image": "/images/assets/halfdan/halfdan-hero.jpg",
+      "alt": "Halfdan field",
+      "videoSrc": "",
+      "photos": [
+        { "src": "/images/assets/halfdan/halfdan-hero.jpg", "alt": "Halfdan hero" }
+      ]
+    },
+    {
+  "id": "dan",
+  "name": "Dan",
+  "summary": "Mature field with ongoing brownfield work and recovery improvements.",
+  "overview": [
+    "The Dan field was discovered in 1971 and brought on production in 1972. Dan was the first field in production in Denmark, and close to 26 percent of total Danish oil production has been extracted from the Dan field.",
+    "The Dan field is one of the largest North Sea chalk fields with both Ekofisk and Tor Formations, both with oil rims overlying gas caps and communication between the 2 formations. The reservoirs are high porosity, but low permeability with long transition zones. The Dan field has been developed in several phases and now consists of a total of 12 platforms, 38 active oil wells and 33 active water injectors. Dan has 2 satellite fields, Kraka and Regnar (shut-in). The Dan process centre consists of the Dan F complex, the old Dan complex, and the satellites Kraka and Regnar.",
+    "Dan was brought on-stream in 1972, Kraka in 1991, Regnar in 1993. The oil production from Dan is transported to Gorm while the gas is transported to Tyra."
+  ],
+  "image": "/images/assets/dan/dan-hero.jpg",
+  "alt": "Dan field",
+  "videoSrc": "",
+  "photos": [
+    { "src": "/images/assets/dan/dan-hero.jpg", "alt": "Dan hero" }
+  ]
+},
+    {
+      "id": "gorm",
+      "name": "Gorm",
+      "summary": "Key offshore hub in the Danish North Sea.",
+      "image": "/images/assets/gorm/gorm-hero.jpg",
+      "alt": "Gorm offshore platform complex",
+      "videoSrc": "",
+      "photos": [
+        { "src": "/images/assets/gorm/gorm-hero.jpg", "alt": "Gorm hero" }
+      ]
+    }
   ]
 }

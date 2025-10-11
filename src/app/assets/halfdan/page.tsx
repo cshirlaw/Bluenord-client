@@ -1,55 +1,58 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Section from "@/components/Section";
 import VideoEmbed from "@/components/VideoEmbed";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { loadAssets, getPrevNext } from "@/lib/assets";
 
-export default function HalfdanPage() {
-  const trail = [
-    { label: "Home", href: "/" },
-    { label: "Assets", href: "/assets" },
-    { label: "Halfdan" }
-  ];
-  const photos = [{ src: "/images/assets/halfdan/halfdan-1.png", alt: "Halfdan field" }];
+export default async function HalfdanPage() {
+  const { items } = await loadAssets();
+  const halfdan = items.find(i => i.id?.toLowerCase() === "halfdan");
+
+  const name = halfdan?.name ?? "Halfdan";
+  const summary = halfdan?.summary ?? "Overview, media, and key information for the Halfdan field.";
+  const image = halfdan?.image ?? "/images/assets/halfdan/halfdan-hero.jpg";
+  const alt = halfdan?.alt ?? "Halfdan field";
+  const videoSrc = (halfdan?.videoSrc ?? "").trim();
+  const photos = (halfdan?.photos?.length ? halfdan.photos : [{ src: image, alt }]).map(p => ({
+    src: p.src, alt: p.alt ?? name
+  }));
+
+  const { prev, next } = getPrevNext(items, "halfdan");
 
   return (
     <div className="space-y-8">
-      <PageHero
-        imageSrc="/images/assets/halfdan/halfdan-1.png"
-        imageAlt="Halfdan field"
-        title="Halfdan"
-        intro="Overview, media, and key information for the Halfdan field."
-      />
+      <PageHero imageSrc={image} imageAlt={alt} title={name} intro={summary} />
       <main className="mx-auto max-w-6xl px-4 space-y-12">
-        <Breadcrumbs trail={trail} />
-
         <Section eyebrow="Overview" title="Field summary">
-          <div className="prose max-w-none">
-            <p>Add Halfdan’s description here. Include production notes and milestones.</p>
-          </div>
+          <p className="text-lg text-neutral-700">{summary}</p>
         </Section>
 
-        <Section eyebrow="Media" title="Video">
-          <VideoEmbed src="https://player.vimeo.com/video/657831147?h=f5589982f8" title="Halfdan video" />
-        </Section>
+        {videoSrc && (
+          <Section eyebrow="Media" title="Video">
+            <VideoEmbed src={videoSrc} title="Halfdan video" />
+          </Section>
+        )}
 
         <Section eyebrow="Gallery" title="Photos">
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {photos.map((p) => (
-              <li key={p.src} className="rounded-2xl border overflow-hidden">
-                <img src={p.src} alt={p.alt} className="w-full h-48 object-cover" />
+              <li key={p.src} className="rounded-2xl border overflow-hidden bg-white">
+                <Image src={p.src} alt={p.alt ?? name} width={1600} height={1000} className="w-full h-auto object-contain" />
               </li>
             ))}
           </ul>
         </Section>
 
-        <section aria-label="Asset navigation" className="pt-4">
+        <section aria-label="Asset navigation" className="pt-2">
           <div className="grid grid-cols-3 items-center">
             <div className="justify-self-start">
-              <Link href="/assets/tyra" className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 hover:shadow focus:outline-none focus:ring">
-                <span>←</span><span>Tyra</span>
-              </Link>
+              {prev ? (
+                <Link href={`/assets/${prev.id}`} className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 hover:shadow focus:outline-none focus:ring">
+                  <span>←</span><span>{prev.name}</span>
+                </Link>
+              ) : <span />}
             </div>
             <div className="justify-self-center">
               <Link href="/assets" className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 hover:shadow focus:outline-none focus:ring">
@@ -57,14 +60,14 @@ export default function HalfdanPage() {
               </Link>
             </div>
             <div className="justify-self-end">
-              <Link href="/assets/dan" className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 hover:shadow focus:outline-none focus:ring">
-                <span>Dan</span><span>→</span>
-              </Link>
+              {next ? (
+                <Link href={`/assets/${next.id}`} className="inline-flex items-center gap-2 rounded-2xl border px-4 py-2 hover:shadow focus:outline-none focus:ring">
+                  <span>{next.name}</span><span>→</span>
+                </Link>
+              ) : <span />}
             </div>
           </div>
         </section>
-
-        <Breadcrumbs trail={trail} />
       </main>
     </div>
   );

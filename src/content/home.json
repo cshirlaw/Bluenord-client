@@ -1,28 +1,19 @@
 {
   "hero": {
-    "eyebrow": "Bluenord",
-    "title": "Energy with discipline",
-    "intro": "Focused operations, clear governance, investor-grade reporting."
+    "eyebrow": "BlueNord",
+    "title": "BlueNord",
+    "intro": "Focused North Sea operator delivering reliable value.",
+    "image": "/images/hero/hero.jpg",
+    "alt": "Foamy sea"
   },
   "highlights": [
-    {
-      "title": "The Company",
-      "text": "Who we are, how we operate, and what we stand for.",
-      "href": "/the-company"
-    },
-    {
-      "title": "Assets",
-      "text": "A concise view of our portfolio and key metrics.",
-      "href": "/assets"
-    },
-    {
-      "title": "Investors",
-      "text": "KPIs, reports, and news for shareholders and analysts.",
-      "href": "/investors"
-    }
+    { "title": "Company",    "text": "At a glance",                        "href": "/company" },
+    { "title": "Assets",     "text": "Tyra, Halfdan, Dan, Gorm",           "href": "/assets" },
+    { "title": "Investors",  "text": "Reports, Share & Debt",              "href": "/investors" },
+    { "title": "Financials", "text": "Key metrics & featured PDF",         "href": "/financials" }
   ],
   "ctas": [
-    { "label": "Contact us", "href": "/contact" },
-    { "label": "Investor centre", "href": "/investors" }
+    { "label": "Contact us",       "href": "/contact" },
+    { "label": "Investor centre",  "href": "/investors" }
   ]
 }
