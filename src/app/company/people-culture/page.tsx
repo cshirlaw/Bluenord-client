@@ -1,27 +1,36 @@
 import React from "react";
 import PageHero from "@/components/PageHero";
 import Section from "@/components/Section";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs, { type Crumb } from "@/components/Breadcrumbs";
 
 export default function PeopleCulturePage() {
-  const trail = [{ label: "Home", href: "/" }, { label: "Company", href: "/company" }, { label: "People & culture" }];
+  const HOME_LABEL = process.env.NEXT_PUBLIC_HOME_LABEL ?? "HomeClient";
+
+  const items: Crumb[] = [
+    { label: HOME_LABEL, href: "/" },
+    { label: "The Company", href: "/company" },
+    { label: "People & Culture", current: true }, // no href needed if your Crumb href is optional
+  ];
 
   return (
     <div className="space-y-12">
       <PageHero
-        imageSrc="/images/hero-offshore.png"
-        imageAlt="People and culture"
+        imageSrc="/images/hero/hero.jpg"
+        imageAlt="People & culture"
         title="People & culture"
         intro="Capability, wellbeing and inclusion."
+        mode="contain"
+        size="compact"
       />
+
       <main className="mx-auto max-w-6xl px-4 space-y-12">
-        <Breadcrumbs items={trail} />
-        <Section eyebrow="Overview" title="Our people">
+        <Breadcrumbs items={items} />
+
+        <Section eyebrow="Overview" title="Our approach">
           <div className="prose max-w-none">
             <p>Add your copy for people & culture here.</p>
           </div>
         </Section>
-       <Breadcrumbs items={trail} />
       </main>
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Section from "@/components/Section";
@@ -18,15 +17,22 @@ export default async function DanPage() {
   const image = dan?.image ?? "/images/assets/dan/dan-hero.jpg";
   const alt = dan?.alt ?? "Dan field";
   const videoSrc = (dan?.videoSrc ?? "").trim();
-  const photos = (dan?.photos?.length ? dan.photos : [{ src: image, alt }]).map(p => ({
-    src: p.src, alt: p.alt ?? name
-  }));
 
   const { prev, next } = getPrevNext(items, "dan");
 
   return (
     <div className="space-y-8">
-      <PageHero imageSrc={image} imageAlt={alt} title={name} intro={summary} />
+      <PageHero
+        imageSrc={image}
+        imageAlt={alt}
+        title={name}
+        intro={summary}
+        mode="contain"
+        size="compact"
+        align="top"
+        hAlign="left"
+        focus="top"
+      />
 
       <main className="mx-auto max-w-6xl px-4 space-y-12">
         <Section eyebrow="Overview" title="Field summary">
@@ -46,22 +52,6 @@ export default async function DanPage() {
             <VideoEmbed src={videoSrc} title="Dan video" />
           </Section>
         )}
-
-        <Section eyebrow="Gallery" title="Photos">
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {photos.map((p) => (
-              <li key={p.src} className="rounded-2xl border overflow-hidden bg-white">
-                <Image
-                  src={p.src}
-                  alt={p.alt ?? name}
-                  width={1600}
-                  height={1000}
-                  className="w-full h-auto object-contain"
-                />
-              </li>
-            ))}
-          </ul>
-        </Section>
 
         {/* Dynamic pager from JSON order */}
         <section aria-label="Asset navigation" className="pt-2">

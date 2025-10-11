@@ -10,7 +10,7 @@
       "summary": "Flagship redevelopment and key gas hub in the Danish North Sea.",
       "image": "/images/assets/tyra/tyra-original.jpg",
       "alt": "Tyra field",
-      "videoSrc": "",
+     "videoSrc": "https://player.vimeo.com/video/657831189",
       "photos": [
         { "src": "/images/assets/tyra/tyra-original.jpg", "alt": "Tyra hero" }
       ]
@@ -31,9 +31,11 @@
   "name": "Dan",
   "summary": "Mature field with ongoing brownfield work and recovery improvements.",
   "overview": [
-    "The Dan field was discovered in 1971 and brought on production in 1972. Dan was the first field in production in Denmark, and close to 26 percent of total Danish oil production has been extracted from the Dan field.",
-    "The Dan field is one of the largest North Sea chalk fields with both Ekofisk and Tor Formations, both with oil rims overlying gas caps and communication between the 2 formations. The reservoirs are high porosity, but low permeability with long transition zones. The Dan field has been developed in several phases and now consists of a total of 12 platforms, 38 active oil wells and 33 active water injectors. Dan has 2 satellite fields, Kraka and Regnar (shut-in). The Dan process centre consists of the Dan F complex, the old Dan complex, and the satellites Kraka and Regnar.",
-    "Dan was brought on-stream in 1972, Kraka in 1991, Regnar in 1993. The oil production from Dan is transported to Gorm while the gas is transported to Tyra."
+    "The Dan field was discovered in 1971 and brought on production in 1972.",
+    "It has been developed in several phases and has of a total of 12 platforms,",
+    "38 active oil wells and 33 active water injectors. ",
+    "",
+    "Oil production from Dan is transported to Gorm while gas is transported to Tyra."
   ],
   "image": "/images/assets/dan/dan-hero.jpg",
   "alt": "Dan field",

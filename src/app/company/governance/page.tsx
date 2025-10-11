@@ -9,7 +9,7 @@ export default function GovernancePage() {
   return (
     <div className="space-y-12">
       <PageHero
-        imageSrc="/images/hero-offshore.png"
+        imageSrc="/images/hero/hero.jpg"
         imageAlt="Governance"
         title="Governance"
         intro="Risk management, integrity and accountability."

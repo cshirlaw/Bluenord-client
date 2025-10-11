@@ -13,7 +13,7 @@ export default function SharePage() {
   return (
     <div className="space-y-12">
       <PageHero
-        imageSrc="/images/hero-offshore.png"
+        imageSrc="/images/hero/hero.jpg"
         imageAlt="Share"
         title="Share"
         intro="Key information for current and prospective shareholders."

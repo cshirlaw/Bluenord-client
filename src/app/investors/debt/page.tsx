@@ -13,7 +13,7 @@ export default function DebtPage() {
   return (
     <div className="space-y-12">
       <PageHero
-        imageSrc="/images/hero-offshore.png"
+        imageSrc="/images/hero/hero.jpg"
         imageAlt="Debt"
         title="Debt"
         intro="Overview of bonds and financing."

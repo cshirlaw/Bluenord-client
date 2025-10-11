@@ -15,7 +15,7 @@ export default function CompanyPage() {
   return (
     <div className="space-y-12">
       <PageHero
-        imageSrc="/images/hero-offshore.png"
+        imageSrc="/images/hero/hero.jpg"
         imageAlt="The Company"
         title="The Company"
         intro="BlueNord at a glance and our focus areas."
