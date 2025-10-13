@@ -15,7 +15,7 @@ export default function PeopleCulturePage() {
   return (
     <div className="space-y-12">
       <PageHero
-        imageSrc="/images/hero/hero.jpg"
+        imageSrc="/images/hero/people.jpg"
         imageAlt="People & culture"
         title="People & culture"
         intro="Capability, wellbeing and inclusion."

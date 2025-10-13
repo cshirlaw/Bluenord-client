@@ -16,7 +16,7 @@ export default function DebtPage() {
         imageSrc="/images/hero/hero.jpg"
         imageAlt="Debt"
         title="Debt"
-        intro="Overview of bonds and financing."
+        intro="BlueNord uses different sources of funding and currently has the following outstanding debt instruments. of bonds and financing."
       />
       <main className="mx-auto max-w-6xl px-4 space-y-12">
         <Breadcrumbs items={trail} />
