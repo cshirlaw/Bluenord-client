@@ -3,10 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useScrolled from '@/hooks/useScrolled';
 
-// Env-driven labels
 const SITE_NAME  = process.env.NEXT_PUBLIC_SITE_NAME  ?? 'BlueNord Client';
 const HOME_LABEL = process.env.NEXT_PUBLIC_HOME_LABEL ?? 'HomeClient';
 
@@ -29,8 +28,9 @@ const MENU: MenuGroup[] = [
   {
     key: 'assets',
     label: 'Assets',
-    href: '/assets/tyra',
+    href: '/assets', // ← fixed: go to assets landing
     items: [
+      { href: '/assets', label: 'At a glance' }, // ← added landing link
       { href: '/assets/tyra', label: 'Tyra' },
       { href: '/assets/halfdan', label: 'Halfdan' },
       { href: '/assets/dan', label: 'Dan' },
@@ -44,7 +44,7 @@ const MENU: MenuGroup[] = [
     items: [
       { href: '/investors', label: 'Overview' },
       { href: '/investors/reports', label: 'Reports' },
-      { href: '/investors/presentations', label: 'Presentations' }, // normalized to /financials below
+      { href: '/investors/presentations', label: 'Presentations' }, // normalized below
       { href: '/investors/financial-calendar', label: 'Financial Calendar' },
       { href: '/investors/share', label: 'Share' },
       { href: '/investors/debt', label: 'Debt' },
@@ -64,27 +64,22 @@ const MENU: MenuGroup[] = [
   },
 ];
 
-// Force Presentations → /financials
 const normalizeHref = (item: { href: string; label: string }) =>
   item.label === 'Presentations' ? '/financials' : item.href;
 
 export default function TopNav() {
   const pathname = usePathname() || '/';
-  const [openKey, setOpenKey] = useState<string | null>(null);     // desktop dropdown
-  const [mobileOpen, setMobileOpen] = useState(false);             // mobile panel
-  const [mobileSection, setMobileSection] = useState<string | null>(null); // mobile accordion
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSection, setMobileSection] = useState<string | null>(null);
   const scrolled = useScrolled(8);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isActiveTop = (href: string) =>
     pathname === href || pathname.startsWith(href + '/');
 
-  // Header frame
   const headerFrame = scrolled
     ? 'bg-nav-bg backdrop-blur-md shadow-sm'
     : 'bg-transparent';
 
-  // Desktop link classes
   const baseLink = 'rounded-xl px-3 py-1 transition-colors border';
   const linkIdleBefore   = 'text-brand-deep bg-brand-light/30 border-brand-light/60 hover:bg-brand-light/40';
   const linkActiveBefore = 'text-brand-deep bg-white/85 border-brand-light/60';
@@ -99,29 +94,7 @@ export default function TopNav() {
         : (active ? linkActiveBefore : linkIdleBefore),
     ].join(' ');
 
-  // Desktop dropdown flicker control
-  const openMenu = (key: string) => {
-    if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null; }
-    setOpenKey(key);
-  };
-  const closeMenuSoon = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpenKey(null), 120);
-  };
-
-  // Close dropdowns / mobile on ESC
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setOpenKey(null);
-        setMobileOpen(false);
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  // Lock body scroll when mobile menu open
+  // Lock body scroll when mobile panel open
   useEffect(() => {
     if (!mobileOpen) return;
     const prev = document.body.style.overflow;
@@ -130,8 +103,7 @@ export default function TopNav() {
   }, [mobileOpen]);
 
   return (
-    <header role="banner" className={`fixed inset-x-0 top-0 z-50 transition-colors ${headerFrame}`}>
-      {/* Bar */}
+    <header role="banner" className={`fixed inset-x-0 top-0 z-50 isolate transition-colors ${headerFrame}`}>
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4">
         {/* Brand */}
         <Link href="/" aria-label={SITE_NAME} className="flex items-center">
@@ -155,7 +127,7 @@ export default function TopNav() {
           <span className="sr-only">{SITE_NAME}</span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop nav (CSS hover dropdowns) */}
         <nav className="relative ml-auto hidden items-center gap-2 text-sm md:flex">
           {MENU.map((m) => {
             const activeTop = isActiveTop(m.href);
@@ -175,53 +147,55 @@ export default function TopNav() {
             }
 
             return (
-              <div
-                key={m.key}
-                className="relative group"
-                onMouseEnter={() => openMenu(m.key)}
-                onMouseLeave={closeMenuSoon}
-                onFocus={() => openMenu(m.key)}
-                onBlur={(e) => {
-                  if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpenKey(null);
-                }}
-              >
+              <div key={m.key} className="relative group">
+                {/* Trigger */}
                 <Link
                   href={m.href}
-                  aria-expanded={openKey === m.key}
                   aria-haspopup="menu"
+                  aria-expanded={undefined}
                   aria-current={activeTop ? 'page' : undefined}
                   className={linkClass(activeTop)}
                 >
                   {m.label}
                 </Link>
 
-                {/* Hover bridge */}
-                <div className="pointer-events-none absolute left-0 top-full h-2 w-64" />
+                {/* Hover bridge: prevents gap flicker between trigger and panel */}
+                <span
+                  aria-hidden
+                  className="
+                    absolute left-0 right-0 top-full h-2
+                    pointer-events-none
+                    group-hover:pointer-events-auto
+                    group-focus-within:pointer-events-auto
+                  "
+                />
 
-                {/* Dropdown (children have NO active styling — hover only) */}
-                {openKey === m.key && (
-                  <div
-                    role="menu"
-                    onMouseEnter={() => openMenu(m.key)}
-                    onMouseLeave={closeMenuSoon}
-                    className="pointer-events-auto absolute left-0 top-[calc(100%+8px)] z-50 w-64 rounded-xl border bg-white/95 p-2 shadow-lg backdrop-blur-sm"
-                  >
-                    {m.items!.map((a) => {
-                      const hrefResolved = normalizeHref(a);
-                      return (
-                        <Link
-                          key={a.href}
-                          href={hrefResolved}
-                          role="menuitem"
-                          className="block rounded-lg px-3 py-1.5 text-slate-700 hover:bg-slate-50 transition-colors"
-                          onClick={() => setOpenKey(null)}
-                        >
-                          {a.label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
+                {/* Panel (no gap; use top-full + mt-2) */}
+                <div
+                  role="menu"
+                  aria-label={m.label}
+                  className="
+                    absolute left-0 top-full mt-2 z-50 w-72 rounded-xl border bg-white p-2 shadow-lg backdrop-blur-sm
+                    opacity-0 -translate-y-1 scale-95 pointer-events-none
+                    transition ease-out duration-150 origin-top
+                    group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 group-hover:pointer-events-auto
+                    group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:pointer-events-auto
+                  "
+                >
+                  {m.items!.map((a) => {
+                    const hrefResolved = normalizeHref(a);
+                    return (
+                      <Link
+                        key={a.href}
+                        href={hrefResolved}
+                        role="menuitem"
+                        className="block rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50 transition-colors"
+                      >
+                        {a.label}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
