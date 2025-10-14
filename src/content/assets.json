@@ -1,46 +1,45 @@
 {
-  {
-  "id": "tyra",
-  "name": "Tyra",
-  "summary": "Flagship gas hub in the Danish North Sea and a central part of the area’s infrastructure.",
-  "facts": [
-    { "label": "Operator", "value": "TotalEnergies" },
-    { "label": "Partners", "value": "BlueNord, Nordsøfonden" },
-    { "label": "Role", "value": "Danish North Sea gas hub" },
-    { "label": "On stream", "value": "1984 (reconstruction completed)" },
-    { "label": "Exports", "value": "Gas via Danish network" }
-  ],
-  "image": "/images/assets/tyra/tyra-original.jpg",
-  "alt": "Tyra field",
-  "videoSrc": "https://player.vimeo.com/video/657831189",
-  "photos": [
-    { "src": "/images/assets/tyra/tyra-original.jpg", "alt": "Tyra hero" }
-  ]
-},
+  "hero": {
+    "title": "Assets",
+    "lede": "Overview of our core producing fields and key projects."
+  },
+  "items": [
+    {
+      "id": "tyra",
+      "name": "Tyra",
+      "summary": "Flagship gas hub in the Danish North Sea and a central part of the area’s infrastructure.",
+      "facts": [
+        { "label": "Operator", "value": "TotalEnergies" },
+        { "label": "Partners", "value": "BlueNord, Nordsøfonden" },
+        { "label": "Role", "value": "Danish North Sea gas hub" },
+        { "label": "On stream", "value": "1984 (reconstruction completed)" },
+        { "label": "Exports", "value": "Gas via Danish network" }
+      ],
+      "image": "/images/assets/tyra/tyra-original.jpg",
+      "alt": "Tyra field",
+      "videoSrc": "https://player.vimeo.com/video/657831189",
+      "photos": [
+        { "src": "/images/assets/tyra/tyra-original.jpg", "alt": "Tyra hero" }
+      ]
+    },
     {
       "id": "halfdan",
       "name": "Halfdan",
       "summary": "Large producing complex focused on infill drilling and optimisation.",
+      "facts": [
+        { "label": "Focus", "value": "Infill drilling & optimisation" }
+      ],
       "image": "/images/assets/halfdan/halfdan-hero.jpg",
       "alt": "Halfdan field",
       "videoSrc": "",
       "photos": [
         { "src": "/images/assets/halfdan/halfdan-hero.jpg", "alt": "Halfdan hero" }
-      ],
-      "facts": [
-        { "label": "Focus", "value": "Infill drilling & optimisation" }
       ]
     },
     {
       "id": "dan",
       "name": "Dan",
       "summary": "Mature field with ongoing brownfield work and recovery improvements.",
-      "image": "/images/assets/dan/dan-hero.jpg",
-      "alt": "Dan field",
-      "videoSrc": "",
-      "photos": [
-        { "src": "/images/assets/dan/dan-hero.jpg", "alt": "Dan hero" }
-      ],
       "facts": [
         { "label": "Discovered", "value": "1971" },
         { "label": "On stream", "value": "1972" },
@@ -49,20 +48,26 @@
         { "label": "Active water injectors", "value": "33" },
         { "label": "Oil exported", "value": "To Gorm" },
         { "label": "Gas exported", "value": "To Tyra" }
+      ],
+      "image": "/images/assets/dan/dan-hero.jpg",
+      "alt": "Dan field",
+      "videoSrc": "",
+      "photos": [
+        { "src": "/images/assets/dan/dan-hero.jpg", "alt": "Dan hero" }
       ]
     },
     {
       "id": "gorm",
       "name": "Gorm",
       "summary": "Key offshore hub in the Danish North Sea.",
+      "facts": [
+        { "label": "Role", "value": "Offshore hub" }
+      ],
       "image": "/images/assets/gorm/gorm-hero.jpg",
       "alt": "Gorm offshore platform complex",
       "videoSrc": "",
       "photos": [
         { "src": "/images/assets/gorm/gorm-hero.jpg", "alt": "Gorm hero" }
-      ],
-      "facts": [
-        { "label": "Role", "value": "Offshore hub" }
       ]
     }
   ]
