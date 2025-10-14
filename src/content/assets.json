@@ -1,20 +1,22 @@
 {
-  "hero": {
-    "title": "Assets",
-    "lede": "Overview of our core producing fields and key projects."
-  },
-  "items": [
-    {
-      "id": "tyra",
-      "name": "Tyra",
-      "summary": "Flagship redevelopment and key gas hub in the Danish North Sea.",
-      "image": "/images/assets/tyra/tyra-original.jpg",
-      "alt": "Tyra field",
-     "videoSrc": "https://player.vimeo.com/video/657831189",
-      "photos": [
-        { "src": "/images/assets/tyra/tyra-original.jpg", "alt": "Tyra hero" }
-      ]
-    },
+  {
+  "id": "tyra",
+  "name": "Tyra",
+  "summary": "Flagship gas hub in the Danish North Sea and a central part of the area’s infrastructure.",
+  "facts": [
+    { "label": "Operator", "value": "TotalEnergies" },
+    { "label": "Partners", "value": "BlueNord, Nordsøfonden" },
+    { "label": "Role", "value": "Danish North Sea gas hub" },
+    { "label": "On stream", "value": "1984 (reconstruction completed)" },
+    { "label": "Exports", "value": "Gas via Danish network" }
+  ],
+  "image": "/images/assets/tyra/tyra-original.jpg",
+  "alt": "Tyra field",
+  "videoSrc": "https://player.vimeo.com/video/657831189",
+  "photos": [
+    { "src": "/images/assets/tyra/tyra-original.jpg", "alt": "Tyra hero" }
+  ]
+},
     {
       "id": "halfdan",
       "name": "Halfdan",
@@ -24,26 +26,31 @@
       "videoSrc": "",
       "photos": [
         { "src": "/images/assets/halfdan/halfdan-hero.jpg", "alt": "Halfdan hero" }
+      ],
+      "facts": [
+        { "label": "Focus", "value": "Infill drilling & optimisation" }
       ]
     },
     {
-  "id": "dan",
-  "name": "Dan",
-  "summary": "Mature field with ongoing brownfield work and recovery improvements.",
-  "overview": [
-    "The Dan field was discovered in 1971 and brought on production in 1972.",
-    "It has been developed in several phases and has of a total of 12 platforms,",
-    "38 active oil wells and 33 active water injectors. ",
-    "",
-    "Oil production from Dan is transported to Gorm while gas is transported to Tyra."
-  ],
-  "image": "/images/assets/dan/dan-hero.jpg",
-  "alt": "Dan field",
-  "videoSrc": "",
-  "photos": [
-    { "src": "/images/assets/dan/dan-hero.jpg", "alt": "Dan hero" }
-  ]
-},
+      "id": "dan",
+      "name": "Dan",
+      "summary": "Mature field with ongoing brownfield work and recovery improvements.",
+      "image": "/images/assets/dan/dan-hero.jpg",
+      "alt": "Dan field",
+      "videoSrc": "",
+      "photos": [
+        { "src": "/images/assets/dan/dan-hero.jpg", "alt": "Dan hero" }
+      ],
+      "facts": [
+        { "label": "Discovered", "value": "1971" },
+        { "label": "On stream", "value": "1972" },
+        { "label": "Platforms", "value": "12" },
+        { "label": "Active oil wells", "value": "38" },
+        { "label": "Active water injectors", "value": "33" },
+        { "label": "Oil exported", "value": "To Gorm" },
+        { "label": "Gas exported", "value": "To Tyra" }
+      ]
+    },
     {
       "id": "gorm",
       "name": "Gorm",
@@ -53,6 +60,9 @@
       "videoSrc": "",
       "photos": [
         { "src": "/images/assets/gorm/gorm-hero.jpg", "alt": "Gorm hero" }
+      ],
+      "facts": [
+        { "label": "Role", "value": "Offshore hub" }
       ]
     }
   ]
