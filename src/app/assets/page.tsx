@@ -1,3 +1,4 @@
+// src/app/assets/page.tsx
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,7 @@ export default async function AssetsIndexPage() {
       {/* Page heading */}
       <header className="space-y-2">
         <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">{heroTitle}</h1>
-        <p className="text-lg text-neutral-700">{heroLede}</p>
+        {heroLede && <p className="text-lg text-neutral-700">{heroLede}</p>}
       </header>
 
       {/* Grid of asset cards */}
@@ -39,7 +40,7 @@ export default async function AssetsIndexPage() {
                       className="h-auto w-full object-contain"
                     />
                   ) : (
-                    <div className="text-sm text-neutral-400">No image</div>
+                    <div className="text-sm text-neutral-400 py-10">No image</div>
                   )}
                 </div>
                 <div className="p-4">

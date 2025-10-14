@@ -3,6 +3,8 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 export type AssetPhoto = { src: string; alt?: string };
+export type AssetFact = { label: string; value: string };
+
 export type AssetItem = {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export type AssetItem = {
   alt?: string;
   videoSrc?: string;
   photos?: AssetPhoto[];
+  facts?: AssetFact[]; // <- key–value facts for the Overview box (optional)
 };
 
 export type AssetsContent = {
@@ -20,7 +23,10 @@ export type AssetsContent = {
 
 export async function loadAssets(): Promise<AssetsContent> {
   try {
-    const file = await fs.readFile(path.join(process.cwd(), "src/content/assets.json"), "utf8");
+    const file = await fs.readFile(
+      path.join(process.cwd(), "src/content/assets.json"),
+      "utf8"
+    );
     const json = JSON.parse(file);
     const items: AssetItem[] = Array.isArray(json.items) ? json.items : [];
     return { hero: json.hero ?? {}, items };

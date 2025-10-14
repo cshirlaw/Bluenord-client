@@ -28,9 +28,9 @@ const MENU: MenuGroup[] = [
   {
     key: 'assets',
     label: 'Assets',
-    href: '/assets', // ← fixed: go to assets landing
+    href: '/assets', // Landing page
     items: [
-      { href: '/assets', label: 'At a glance' }, // ← added landing link
+      { href: '/assets', label: 'At a glance' },
       { href: '/assets/tyra', label: 'Tyra' },
       { href: '/assets/halfdan', label: 'Halfdan' },
       { href: '/assets/dan', label: 'Dan' },
@@ -170,31 +170,39 @@ export default function TopNav() {
                   "
                 />
 
-                {/* Panel (no gap; use top-full + mt-2) */}
+                {/* PANEL — Option B: Squared outline card */}
                 <div
                   role="menu"
                   aria-label={m.label}
                   className="
-                    absolute left-0 top-full mt-2 z-50 w-72 rounded-xl border bg-white p-2 shadow-lg backdrop-blur-sm
+                    absolute left-0 top-full mt-2 z-50 w-72
+                    rounded-md border border-slate-200 bg-white shadow-xl
                     opacity-0 -translate-y-1 scale-95 pointer-events-none
                     transition ease-out duration-150 origin-top
                     group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 group-hover:pointer-events-auto
                     group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:pointer-events-auto
                   "
                 >
-                  {m.items!.map((a) => {
-                    const hrefResolved = normalizeHref(a);
-                    return (
-                      <Link
-                        key={a.href}
-                        href={hrefResolved}
-                        role="menuitem"
-                        className="block rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50 transition-colors"
-                      >
-                        {a.label}
-                      </Link>
-                    );
-                  })}
+                  <ul className="py-1 divide-y divide-slate-100">
+                    {m.items!.map((a) => {
+                      const hrefResolved = normalizeHref(a);
+                      return (
+                        <li key={a.href}>
+                          <Link
+                            href={hrefResolved}
+                            role="menuitem"
+                            className="
+                              block px-3 py-2 text-sm text-slate-800
+                              hover:bg-slate-50 focus:bg-slate-50
+                              focus:outline-none
+                            "
+                          >
+                            {a.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               </div>
             );

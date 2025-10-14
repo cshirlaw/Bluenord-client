@@ -45,12 +45,26 @@ export default function SharePage() {
 
       {/* Live chart widget */}
       <Section eyebrow="Market overview" title="Price and volume (OSL: BNOR)">
-        <ShareWidget />
-        <p className="mt-3 text-xs opacity-70">
-          Data shown via a third-party public widget and may be delayed. For authoritative and
-          complete information, use the Euronext Oslo links below.
-        </p>
-      </Section>
+  <ShareWidget />
+
+  {/* Caption for TradingView symbol availability */}
+  <p className="mt-2 text-sm opacity-70">
+    Live interactive chart is available on{" "}
+    <a
+      href="https://www.tradingview.com/symbols/OSL-BNOR/"
+      target="_blank"
+      rel="noreferrer"
+      className="underline"
+    >
+      TradingView (OSL: BNOR)
+    </a>.
+  </p>
+
+  <p className="mt-3 text-xs opacity-70">
+    Data shown via a third-party public widget and may be delayed. For authoritative and
+    complete information, use the Euronext Oslo links below.
+  </p>
+</Section>
 
       {/* Key facts + link cards */}
       <Section eyebrow="Key facts" title="Instrument details and official sources">
