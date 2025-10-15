@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { loadAssets, getPrevNext } from "@/lib/assets";
 import AssetOverview from "@/components/AssetOverview";
+import VideoEmbed from "@/components/VideoEmbed";
 
 export const revalidate = 60;
 
@@ -38,6 +39,14 @@ export default async function AssetPage({ params }: { params: { id: string } }) 
       </header>
 
       <AssetOverview asset={asset} />
+
+      {/* Project video (e.g., Tyra’s Vimeo) */}
+      {asset.videoSrc ? (
+        <section className="mt-8">
+          <h2 className="text-xl font-semibold mb-3">Project video</h2>
+          <VideoEmbed src={asset.videoSrc} title={`${asset.name} video`} />
+        </section>
+      ) : null}
 
       {Array.isArray(asset.photos) && asset.photos.length > 0 && (
         <section className="mt-8">

@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import HomeHero from "@/components/HomeHero";
 import KeyInfoGrid from "@/components/KeyInfoGrid";
+import VideoEmbed from "@/components/VideoEmbed";
 
 type CTA = { label: string; href: string };
 type KeyCard = { heading: string; metric: string; sub?: string; kicker?: string; expandHref?: string };
@@ -44,9 +45,19 @@ export default async function HomePage() {
         alt={hero.alt}
         ctas={hero.ctas}
       />
+
       {keyInfo?.cards?.length ? (
         <KeyInfoGrid title={keyInfo.title} cards={keyInfo.cards} />
       ) : null}
+
+      {/* Rebrand video */}
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <h2 className="text-xl font-semibold mb-4">Noreco → BlueNord</h2>
+        <VideoEmbed
+          src="https://player.vimeo.com/video/840426356"
+          title="Noreco to BlueNord"
+        />
+      </section>
     </main>
   );
 }
