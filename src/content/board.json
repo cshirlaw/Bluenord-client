@@ -1,45 +1,52 @@
 {
   "hero": {
     "title": "Our Board of Directors",
-    "image": "/images/hero/boardroom.jpg",
-    "alt": "Boardroom overlooking the sea"
+    "image": "/images/pages/board/hero.jpg",
+    "alt": "Ocean background"
   },
-  "intro": "The Board of Directors of BlueNord is responsible for managing BlueNord’s affairs in the interests of the Company and all shareholders with the aim of creating long-term shareholder value.",
+  "intro": "",
   "members": [
     {
       "name": "Glen Ole Rødland",
       "role": "Chairman",
-      "photo": "/images/board/glen.jpg",
-      "bio": "Glen Ole Rødland is an experienced analyst and corporate finance professional wanies, currently holding positions as Chairman of Prosafe, ABL Group, Pascal Technologies, Borgestad ASA, and Høganes Borgestad AB, and as a Board member of Deep Value Driller and Atlantica Tender Drilling.",
-      "links": { "linkedin": "https://www.linkedin.com/" }
-    },
-    {
-      "name": "Marianne Lie",
-      "role": "Board Member",
-      "photo": "/images/board/marianne.jpg",
-      "bio": "Marianne Lie is a consultant at Fajoma Consulting AS. She holds various board positions including in Wallenius Wilhemsen ASA. She has previously held various board positions including DNB ASA, R.S. Platou, Rainpower ASA, Fortum Corporation, and Telenor ASA.",
-      "links": {}
-    },
-    {
-      "name": "Tone Kristin Omsted",
-      "role": "Board Member",
-      "photo": "/images/board/tone.jpg",
-      "bio": "Tone Kristin Omsted holds a BA Hons. in Finance from the University of Strathclyde. She has broad experience from corporate finance and capital markets and currently serves as head of investor relations at Entra ASA. Previous Experience includes 14 years as an investment banking executive at SEB Enskilda. She has also served on the Board of Directors of Panoro Energy ASA.",
-      "links": {}
+      "photo": "/images/pages/board/glen-ole-rodland.jpg",
+      "bio": "Experienced analyst and corporate finance professional with 13+ years at a leading Scandinavian investment bank and 18+ years managing investments across energy, shipping, oil service, aquaculture and commodities. Chair of Prosafe, ABL Group, Pascal Technologies, Borgestad ASA and Høganes Borgestad AB, and board member of Deep Value Driller and Atlantica Tender Drilling. MBA and postgraduate studies in finance from NHH and UCLA."
     },
     {
       "name": "Bob McGuire",
       "role": "Board Member",
-      "photo": "/images/board/bob.jpg",
-      "bio": "Bob McGuire is the founder of Longwing Partners LLC, as strategic advisory firm. He has a 25-year global track record as an advisor, investor and business leader, has served on numerous boards and has extensive experience in the energy sector, having led the European energy businesses at both Goldman Sachs and J.P.Morgan. Bob is also and independent director at TSX-listed GDI Integrated Facilities Services. He has a BA from Boston College and an MBA from Harvard Business School",
-      "links": {}
+      "photo": "/images/pages/board/bob-mcguire.jpg",
+      "bio": "Founder of Longwing Partners LLC. 25+ years as advisor, investor and business leader with deep energy sector experience; previously led European energy businesses at Goldman Sachs and J.P. Morgan. Independent director at TSX-listed GDI Integrated Facilities Services. BA, Boston College; MBA, Harvard Business School."
     },
     {
       "name": "Peter Coleman",
-      "role": "Director",
-      "photo": "/images/board/*.jpg",
-      "bio": "Peter Coleman joined Taconic in April 2018 where he is a Director focusing on European credit, based in their London office. Prior to joining Taconic, Peter was a Managing Director on the European distressed debt team at SVP Global. Previously, he was an Investment Director in distressed debt at Sisu Capital and prior to this, he was a Director in the corporate finance group and tax group at Pricewaterhouse Coopers. Peter earned a dual LL.B. and B.Com. from Victoria University in New Zealand in 1996.",
-      "links": {}
+      "role": "Board Member",
+      "photo": "/images/pages/board/peter-coleman.jpg",
+      "bio": "Former Director at Taconic (London) focused on European credit. Ex-Managing Director at SVP Global (European distressed debt). Prior roles include Sisu Capital, and corporate finance & tax at PwC. LL.B. and B.Com., Victoria University of Wellington (NZ)."
+    },
+    {
+      "name": "Kristin Færøvik",
+      "role": "Board Member",
+      "photo": "/images/pages/board/kristin-faerovik.jpg",
+      "bio": "MSc Petroleum Engineering (NTNU). Senior energy executive; most recently Managing Director of Lundin Energy Norway. Executive roles at Worley Rosenberg, Marathon Oil and BP. Current board roles include Kongsberg Group, Shearwater, Bunker Holding and Edge Navigation."
+    },
+    {
+      "name": "João Saraiva e Silva",
+      "role": "Board Member",
+      "photo": "/images/pages/board/joao-saraiva-e-silva.jpg",
+      "bio": "Economics degree (Nova SBE). 25+ years in private equity & investment banking with a focus on energy. Partner at Pamplona Capital Management; earlier roles with Seatankers, Carlyle, L1 and Och-Ziff. Began career at Goldman Sachs in London."
+    },
+    {
+      "name": "Elisabeth Proust Van Heeswijk",
+      "role": "Board Member",
+      "photo": "/images/pages/board/elisabeth-proust-van-heeswijk.jpg",
+      "bio": "40+ years international experience in oil & gas, primarily with Total. Rose from drilling engineer at ELF to Total’s first female VP for Development Engineering, leading affiliates in Indonesia, Nigeria and the UK. Serves on Subsea7’s board; multiple non-executive roles. MSc Engineering/Hydrodynamics (École Centrale de Nantes); graduate of IFP School."
+    },
+    {
+      "name": "Jann Brown",
+      "role": "Board Member",
+      "photo": "/images/pages/board/jann-brown.jpg",
+      "bio": "Experienced board director with a finance background. Formerly with KPMG and Deloitte before senior energy sector roles; non-executive roles in engineering, manufacturing and investment management. MA (History); Chartered Accountant and Chartered Tax Adviser; past President of the Institute of Chartered Accountants of Scotland."
     }
   ]
 }

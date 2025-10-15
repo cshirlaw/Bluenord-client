@@ -9,30 +9,26 @@
     {
       "name": "Euan Shirlaw",
       "role": "Chief Executive Officer",
-      "photo": "/images/people/executive/euan-shirlaw.jpg",
-      "bio": "Euan leads strategy, portfolio and performance across the organisation.",
-      "links": { "linkedin": "https://www.linkedin.com/" }
-    },
-    {
-      "name": "Miriam Jager Lykke",
-      "role": "Chief Operating Officer",
-      "photo": "/images/people/executive/miriam-lykke.jpg",
-      "bio": "Responsible for day-to-day operations, HSE and continuous improvement.",
-      "links": { "linkedin": "https://www.linkedin.com/" }
+      "photo": "/images/pages/executive/euan-shirlaw.jpg",
+      "bio": "Euan became Chief Executive Officer of BlueNord in 2022, having joined the Company as Chief Financial Officer in 2019. He has a background of providing strategic advice to a wide range of oil and gas companies on acquisition, divestment and merger activity as well as raising debt and equity capital. Prior to joining BlueNord, Euan was a senior member of the oil & gas advisory team at BMO Capital Markets having also focused on the Energy space while working with Credit Suisse, RBC Capital Markets and Rothschild in London. He has an MSc in Business and Accountancy from the University of Edinburgh."
     },
     {
       "name": "Jacqueline Lindmark Boye",
       "role": "Chief Financial Officer",
-      "photo": "/images/people/executive/jacqueline-lindmark-boye.jpg",
-      "bio": "Leads finance, reporting and capital allocation.",
-      "links": { "linkedin": "https://www.linkedin.com/" }
+      "photo": "/images/pages/executive/jacqueline-lindmark-boye.jpg",
+      "bio": "Jacqueline joined BlueNord in 2019 and holds the position as Chief Finance Officer since October 2023. She has over 20 years’ experience in finance and audit within the energy industry in Australia, the UK and Denmark. Prior to joining BlueNord, Jacqueline has held various roles, including leadership with Shell, AGL Energy, EY and PwC. She holds a Bachelor of Commerce and Bachelor of Arts from Monash University in Australia and is a member of the Chartered Accountants Australia and New Zealand."
+    },
+    {
+      "name": "Miriam Jager Lykke",
+      "role": "Chief Operating Officer",
+      "photo": "/images/pages/executive/miriam-lykke.jpg",
+      "bio": "Miriam joined BlueNord in 2019 and has recently been appointed COO from the Asset Manager role which she held from January 2022. She has nearly 30 years of experience in the upstream oil and gas industry, and prior to BlueNord she held senior technical and management positions within Shell and DONG Energy. Miriam has an MSc in Civil Engineering and a PhD in Rock Mechanics from the Technical University of Denmark (DTU)."
     },
     {
       "name": "Cathrine F. Torgersen",
       "role": "Chief Corporate Affairs Officer",
-      "photo": "/images/people/executive/cathrine-torgersen.jpg",
-      "bio": "Oversees corporate affairs, communications and stakeholder engagement.",
-      "links": { "linkedin": "https://www.linkedin.com/" }
+      "photo": "/images/pages/executive/cathrine-torgersen.jpg",
+      "bio": "Cathrine joined BlueNord’s Executive Team in 2019 and holds the position as Chief Corporate Affairs Officer. She previously had the role as Senior Account Director in Hill+Knowlton, where she advised a wide range of oil & gas- and shipping companies. During her seven years in Hill+Knowlton she was a member of the Management Team and was also leading the Financial Communications practice. Prior to joining Hill+Knowlton, Cathrine worked with institutional high yield sales at Pareto Securities Inc. in New York and Clarksons Platou Securities. She has a BSc in Business Administration and Finance from Bocconi University."
     }
   ]
 }
