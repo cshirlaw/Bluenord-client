@@ -1,0 +1,38 @@
+{
+  "hero": {
+    "title": "Executive Team",
+    "image": "/images/pages/executive/hero.jpg",
+    "alt": "Workspace with charts"
+  },
+  "intro": "BlueNord's executive team works closely together with an ambition to achieve the Company's objectives and deliver value for BlueNord’s stakeholders in a responsible manner.",
+  "members": [
+    {
+      "name": "Euan Shirlaw",
+      "role": "Chief Executive Officer",
+      "photo": "/images/people/executive/euan-shirlaw.jpg",
+      "bio": "Euan leads strategy, portfolio and performance across the organisation.",
+      "links": { "linkedin": "https://www.linkedin.com/" }
+    },
+    {
+      "name": "Miriam Jager Lykke",
+      "role": "Chief Operating Officer",
+      "photo": "/images/people/executive/miriam-lykke.jpg",
+      "bio": "Responsible for day-to-day operations, HSE and continuous improvement.",
+      "links": { "linkedin": "https://www.linkedin.com/" }
+    },
+    {
+      "name": "Jacqueline Lindmark Boye",
+      "role": "Chief Financial Officer",
+      "photo": "/images/people/executive/jacqueline-lindmark-boye.jpg",
+      "bio": "Leads finance, reporting and capital allocation.",
+      "links": { "linkedin": "https://www.linkedin.com/" }
+    },
+    {
+      "name": "Cathrine F. Torgersen",
+      "role": "Chief Corporate Affairs Officer",
+      "photo": "/images/people/executive/cathrine-torgersen.jpg",
+      "bio": "Oversees corporate affairs, communications and stakeholder engagement.",
+      "links": { "linkedin": "https://www.linkedin.com/" }
+    }
+  ]
+}

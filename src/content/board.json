@@ -1,0 +1,45 @@
+{
+  "hero": {
+    "title": "Our Board of Directors",
+    "image": "/images/hero/boardroom.jpg",
+    "alt": "Boardroom overlooking the sea"
+  },
+  "intro": "The Board of Directors of BlueNord is responsible for managing BlueNord’s affairs in the interests of the Company and all shareholders with the aim of creating long-term shareholder value.",
+  "members": [
+    {
+      "name": "Glen Ole Rødland",
+      "role": "Chairman",
+      "photo": "/images/board/glen.jpg",
+      "bio": "Glen Ole Rødland is an experienced analyst and corporate finance professional wanies, currently holding positions as Chairman of Prosafe, ABL Group, Pascal Technologies, Borgestad ASA, and Høganes Borgestad AB, and as a Board member of Deep Value Driller and Atlantica Tender Drilling.",
+      "links": { "linkedin": "https://www.linkedin.com/" }
+    },
+    {
+      "name": "Marianne Lie",
+      "role": "Board Member",
+      "photo": "/images/board/marianne.jpg",
+      "bio": "Marianne Lie is a consultant at Fajoma Consulting AS. She holds various board positions including in Wallenius Wilhemsen ASA. She has previously held various board positions including DNB ASA, R.S. Platou, Rainpower ASA, Fortum Corporation, and Telenor ASA.",
+      "links": {}
+    },
+    {
+      "name": "Tone Kristin Omsted",
+      "role": "Board Member",
+      "photo": "/images/board/tone.jpg",
+      "bio": "Tone Kristin Omsted holds a BA Hons. in Finance from the University of Strathclyde. She has broad experience from corporate finance and capital markets and currently serves as head of investor relations at Entra ASA. Previous Experience includes 14 years as an investment banking executive at SEB Enskilda. She has also served on the Board of Directors of Panoro Energy ASA.",
+      "links": {}
+    },
+    {
+      "name": "Bob McGuire",
+      "role": "Board Member",
+      "photo": "/images/board/bob.jpg",
+      "bio": "Bob McGuire is the founder of Longwing Partners LLC, as strategic advisory firm. He has a 25-year global track record as an advisor, investor and business leader, has served on numerous boards and has extensive experience in the energy sector, having led the European energy businesses at both Goldman Sachs and J.P.Morgan. Bob is also and independent director at TSX-listed GDI Integrated Facilities Services. He has a BA from Boston College and an MBA from Harvard Business School",
+      "links": {}
+    },
+    {
+      "name": "Peter Coleman",
+      "role": "Director",
+      "photo": "/images/board/*.jpg",
+      "bio": "Peter Coleman joined Taconic in April 2018 where he is a Director focusing on European credit, based in their London office. Prior to joining Taconic, Peter was a Managing Director on the European distressed debt team at SVP Global. Previously, he was an Investment Director in distressed debt at Sisu Capital and prior to this, he was a Director in the corporate finance group and tax group at Pricewaterhouse Coopers. Peter earned a dual LL.B. and B.Com. from Victoria University in New Zealand in 1996.",
+      "links": {}
+    }
+  ]
+}

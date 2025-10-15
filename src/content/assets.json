@@ -27,8 +27,12 @@
       "name": "Halfdan",
       "summary": "Large producing complex focused on infill drilling and optimisation.",
       "facts": [
-        { "label": "Focus", "value": "Infill drilling & optimisation" }
-      ],
+  { "label": "Operator", "value": "TotalEnergies" },
+  { "label": "Partners", "value": "BlueNord, Nordsøfonden" },
+  { "label": "Complex", "value": "Halfdan A/B/C" },
+  { "label": "Focus", "value": "Infill drilling & optimisation" },
+  { "label": "Production Type", "value": "Oil & gas" }
+],
       "image": "/images/assets/halfdan/halfdan-hero.jpg",
       "alt": "Halfdan field",
       "videoSrc": "",
@@ -61,8 +65,12 @@
       "name": "Gorm",
       "summary": "Key offshore hub in the Danish North Sea.",
       "facts": [
-        { "label": "Role", "value": "Offshore hub" }
-      ],
+  { "label": "Operator", "value": "TotalEnergies" },
+  { "label": "Partners", "value": "BlueNord, Nordsøfonden" },
+  { "label": "Role", "value": "Offshore hub (oil export from Dan)" },
+  { "label": "Platforms", "value": "Multiple bridge-linked platforms" },
+  { "label": "Production Type", "value": "Oil & gas" }
+],
       "image": "/images/assets/gorm/gorm-hero.jpg",
       "alt": "Gorm offshore platform complex",
       "videoSrc": "",

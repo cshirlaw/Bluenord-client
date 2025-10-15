@@ -24,30 +24,49 @@ export default function HomeHero(props: {
   const lines = heading.split("\n");
 
   return (
-    <section className="relative isolate">
+    // full-bleed section without clipping on left or right
+    <section className="relative isolate w-screen mx-[calc(50%-50vw)] overflow-x-clip">
       {/* Background image + shade */}
       <div className="absolute inset-0 -z-10">
-        <Image src={bg} alt={props.alt ?? ""} fill priority sizes="100vw" className="object-cover" />
+        <Image
+          src={bg}
+          alt={props.alt ?? ""}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-black/35" />
       </div>
 
       {/* Right mark */}
       {props.markImage && (
         <div className="pointer-events-none absolute right-4 md:right-8 bottom-6 md:bottom-10 w-40 md:w-64 opacity-80">
-          <Image src={props.markImage} alt="" width={512} height={512} className="w-full h-auto" />
+          <Image
+            src={props.markImage}
+            alt=""
+            width={512}
+            height={512}
+            className="w-full h-auto"
+          />
         </div>
       )}
 
+      {/* Content container */}
       <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
         <h1 className="text-white font-semibold tracking-tight leading-tight text-4xl md:text-7xl">
           {lines.map((l, i) => (
-            <span key={i} className="block">{l}</span>
+            <span key={i} className="block">
+              {l}
+            </span>
           ))}
         </h1>
 
         {lede && (
           <div className="mt-6 max-w-2xl text-white/90 text-base md:text-lg space-y-4">
-            {lede.split("\n\n").map((p, i) => <p key={i}>{p}</p>)}
+            {lede.split("\n\n").map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
         )}
 
@@ -59,7 +78,9 @@ export default function HomeHero(props: {
                 href={c.href}
                 className="inline-flex items-center gap-3 rounded-full bg-white/85 backdrop-blur px-5 py-3 text-[#0A1C7C] font-medium shadow hover:bg-white"
               >
-                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-cyan-300/70">➤</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-cyan-300/70">
+                  ➤
+                </span>
                 {c.label}
               </Link>
             ))}

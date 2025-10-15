@@ -1,25 +1,14 @@
 {
   "hero": {
     "backgroundImage": "/images/home/hero-ocean.jpg",
-    "markImage": "/images/home/mark.svg",
-
-    // You can keep your old fields; page code will fall back if heading/lede are missing:
+    "markImage": "/images/home/brand-mark.png",
     "heading": "BlueNord\nEurope's energy,\nour expertise.",
     "lede": "BlueNord is a strategically important European oil and gas company specialising in producing and developing resources that support the energy transition towards Net Zero.\n\nWhilst creating value for our stakeholders, BlueNord helps deliver the Energy Security that millions of people depend on in today’s uncertain world.",
-
-    // legacy fallbacks (optional):
-    "eyebrow": "BlueNord",
-    "title": "BlueNord",
-    "intro": "Focused North Sea operator delivering reliable value.",
-    "image": "/images/hero/hero.jpg",
-    "alt": "Foamy sea",
-
     "ctas": [
       { "label": "Energy Security", "href": "/energy-security" },
       { "label": "Energy Transition", "href": "/energy-transition" }
     ]
   },
-
   "keyInfo": {
     "title": "BlueNord Key Information",
     "cards": [
@@ -27,20 +16,13 @@
       { "heading": "Current Production Details", "metric": "24,500 boe/d", "sub": "Q2 2024 production", "expandHref": "/operations/production" },
       { "heading": "Predicted Future Production - 2024", "kicker": "Expected production of", "metric": "55,000 boe/d", "sub": "by 2025", "expandHref": "/operations/forecast" },
       { "heading": "Resources and Reserves", "metric": "213,000,000 boe", "sub": "2P reserves & 2C resources", "expandHref": "/investors/resources" },
-      { "heading": "Solid Financial Performance", "metric": "$171M  ·  $72M", "sub": "Revenue    ·    EBITBA  (Q2 2024)", "expandHref": "/investors/financials" },
+      { "heading": "Solid Financial Performance", "metric": "$171M  ·  $72M", "sub": "Revenue    ·    EBITDA  (Q2 2024)", "expandHref": "/investors/financials" },
       { "heading": "Robust Capital Structure", "metric": "506 NOK   ·   13.3 B NOK", "sub": "Share Price   ·   Market Cap", "expandHref": "/investors/share" }
     ]
   },
-
-  // keep your original highlights/ctas (optional; used nowhere now but harmless):
-  "highlights": [
-    { "title": "Company", "text": "At a glance", "href": "/company" },
-    { "title": "Assets", "text": "Tyra, Halfdan, Dan, Gorm", "href": "/assets" },
-    { "title": "Investors", "text": "Reports, Share & Debt", "href": "/investors" },
-    { "title": "Financials", "text": "Key metrics & featured PDF", "href": "/financials" }
-  ],
+  "highlights": [],
   "ctas": [
-    { "label": "Contact us", "href": "/contact" },
-    { "label": "Investor centre", "href": "/investors" }
+    { "label": "Energy Security", "href": "/energy-security" },
+    { "label": "Energy Transition", "href": "/energy-transition" }
   ]
 }

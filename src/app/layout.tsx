@@ -7,10 +7,6 @@ import SiteFooter from "@/components/SiteFooter";
 import BreadcrumbsGate from "@/components/BreadcrumbsGate";
 import type { Metadata } from "next";
 
-// Env-driven identity (set in .env.local or Vercel)
-//   NEXT_PUBLIC_SITE_NAME=BlueNord Client
-//   NEXT_PUBLIC_HOME_LABEL=HomeClient
-//   NEXT_PUBLIC_SITE_URL=https://bluenord-client.vercel.app   (optional, used for OG URLs)
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? "BlueNord Client";
 const SITE_DESC =
   "Focused North Sea operator. Investor information, reports and assets.";
@@ -48,14 +44,20 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-white text-gray-900`}>
+      {/* Prevent horizontal scroll with full-bleed sections */}
+      <body className={`${inter.className} min-h-screen bg-white text-gray-900 overflow-x-hidden`}>
         <TopNav />
+
+        {/* Breadcrumbs can stay in a container */}
         <div className="container mx-auto max-w-5xl px-4 pt-3">
           <BreadcrumbsGate />
         </div>
-        <main id="main" className="container mx-auto max-w-5xl px-4 py-8">
+
+        {/* Make main full-width; pages add their own containers as needed */}
+        <main id="main" className="mx-auto px-0 py-0">
           {children}
         </main>
+
         <SiteFooter />
       </body>
     </html>

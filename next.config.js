@@ -1,5 +1,8 @@
 // next.config.js
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+
   async headers() {
     return [
       // 1) Global headers (safe; includes Vimeo)
@@ -10,12 +13,12 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline'",         // no 'unsafe-eval' globally
+              "script-src 'self' 'unsafe-inline'", // no 'unsafe-eval' globally
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://i.vimeocdn.com https://f.vimeocdn.com",
               "font-src 'self' data:",
               "connect-src 'self' https://player.vimeo.com https://i.vimeocdn.com https://f.vimeocdn.com",
-              "frame-src https://player.vimeo.com",        // Vimeo allowed everywhere
+              "frame-src https://player.vimeo.com", // Vimeo allowed everywhere
               "worker-src 'self' blob:",
               "base-uri 'self'",
               "form-action 'self'",

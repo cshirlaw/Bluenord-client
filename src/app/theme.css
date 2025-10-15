@@ -1,5 +1,56 @@
 :root { --ring: 0 0% 0%; }
 ::selection { background: rgba(0,0,0,.08); }
-:focus-visible { outline: 2px solid hsl(var(--ring) / .22); outline-offset: 3px; border-radius: 12px; }
+:focus-visible {
+  outline: 2px solid hsl(var(--ring) / .22);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
 a { text-underline-offset: 3px; }
 hr { border-color: rgba(0,0,0,.08); }
+
+/* Legacy pill (kept) */
+.nav-pill {
+  @apply inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium
+         bg-white/90 text-[#0A1C7C] border border-white/70 shadow-sm backdrop-blur-sm;
+}
+.nav-pill:hover { @apply bg-white; }
+.nav-pill:focus { @apply outline-none ring-2 ring-[#0A1C7C]/30; }
+
+/* ────────────────────────────────────────────────
+   Scroll-aware top navigation pills
+   Flip style depending on header[data-top]
+────────────────────────────────────────────────── */
+.topnav-pill {
+  @apply inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium
+         transition-colors border backdrop-blur-sm;
+}
+
+/* At top of page → white pills */
+header[data-top="true"] .topnav-pill {
+  @apply bg-white/90 text-[#0A1C7C] border-white/70;
+}
+header[data-top="true"] .topnav-pill:hover {
+  @apply bg-white;
+}
+header[data-top="true"] .topnav-pill.is-active {
+  @apply bg-white text-[#0A1C7C] border-white shadow;
+}
+
+/* Scrolled → navy pills with white text */
+header[data-top="false"] .topnav-pill {
+  @apply bg-[#0A1C7C]/90 text-white border-[#0A1C7C];
+}
+header[data-top="false"] .topnav-pill:hover {
+  @apply bg-[#0A1C7C];
+}
+header[data-top="false"] .topnav-pill.is-active {
+  @apply bg-[#0A1C7C] text-white border-[#0A1C7C] shadow;
+}
+/* Force desktop/mobile visibility without relying on Tailwind breakpoints */
+[data-role="desktop-nav"] { display: none; }
+[data-role="mobile-btn"]  { display: inline-flex; }
+
+@media (min-width: 768px) {
+  [data-role="desktop-nav"] { display: flex; } /* show desktop nav ≥ md */
+  [data-role="mobile-btn"]  { display: none; } /* hide hamburger ≥ md */
+}

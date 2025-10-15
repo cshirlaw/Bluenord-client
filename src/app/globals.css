@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Your existing video helper */
+/* Prevent horizontal scroll from full-bleed sections */
+html, body {
+  overflow-x: hidden;
+}
+
+/* --- Video helper --- */
 .video-wrapper {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 aspect ratio */

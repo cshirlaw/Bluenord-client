@@ -3,13 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import useScrolled from '@/hooks/useScrolled';
+import { useEffect, useMemo, useState } from 'react';
 
 const SITE_NAME  = process.env.NEXT_PUBLIC_SITE_NAME  ?? 'BlueNord Client';
 const HOME_LABEL = process.env.NEXT_PUBLIC_HOME_LABEL ?? 'HomeClient';
 
-type MenuItem = { href: string; label: string };
+type MenuItem  = { href: string; label: string };
 type MenuGroup = { key: string; label: string; href: string; items?: MenuItem[] };
 
 const MENU: MenuGroup[] = [
@@ -20,6 +19,8 @@ const MENU: MenuGroup[] = [
     href: '/company',
     items: [
       { href: '/company', label: 'At a glance' },
+      { href: '/company/board-of-directors', label: 'Board of Directors' }, // ← added
+      { href: '/company/executive-team', label: 'Executive Team' },
       { href: '/company/governance', label: 'Governance' },
       { href: '/company/people-culture', label: 'People & Culture' },
       { href: '/company/operational-excellence', label: 'Operational Excellence' },
@@ -28,7 +29,7 @@ const MENU: MenuGroup[] = [
   {
     key: 'assets',
     label: 'Assets',
-    href: '/assets', // Landing page
+    href: '/assets',
     items: [
       { href: '/assets', label: 'At a glance' },
       { href: '/assets/tyra', label: 'Tyra' },
@@ -44,7 +45,7 @@ const MENU: MenuGroup[] = [
     items: [
       { href: '/investors', label: 'Overview' },
       { href: '/investors/reports', label: 'Reports' },
-      { href: '/investors/presentations', label: 'Presentations' }, // normalized below
+      { href: '/investors/presentations', label: 'Presentations' },
       { href: '/investors/financial-calendar', label: 'Financial Calendar' },
       { href: '/investors/share', label: 'Share' },
       { href: '/investors/debt', label: 'Debt' },
@@ -69,30 +70,53 @@ const normalizeHref = (item: { href: string; label: string }) =>
 
 export default function TopNav() {
   const pathname = usePathname() || '/';
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
-  const scrolled = useScrolled(8);
+
+  // Scroll state: navy once you’ve scrolled past ~80px
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    const threshold = 80;
+    const update = () =>
+      setAtTop(
+        (window.scrollY ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop ||
+          0) < threshold
+      );
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      window.removeEventListener('load', update);
+    };
+  }, []);
 
   const isActiveTop = (href: string) =>
     pathname === href || pathname.startsWith(href + '/');
 
-  const headerFrame = scrolled
-    ? 'bg-nav-bg backdrop-blur-md shadow-sm'
-    : 'bg-transparent';
+  // HEADER background (still flips)
+  const headerFrame = atTop ? 'bg-transparent' : 'bg-nav-bg backdrop-blur-md shadow-sm';
 
-  const baseLink = 'rounded-xl px-3 py-1 transition-colors border';
-  const linkIdleBefore   = 'text-brand-deep bg-brand-light/30 border-brand-light/60 hover:bg-brand-light/40';
-  const linkActiveBefore = 'text-brand-deep bg-white/85 border-brand-light/60';
-  const linkIdleAfter    = 'text-white hover:text-brand-light hover:bg-white/10 border-transparent';
-  const linkActiveAfter  = 'text-brand-light bg-white/10 border-transparent';
-
-  const linkClass = (active: boolean) =>
-    [
-      baseLink,
-      scrolled
-        ? (active ? linkActiveAfter : linkIdleAfter)
-        : (active ? linkActiveBefore : linkIdleBefore),
-    ].join(' ');
+  // 🔒 Pills’ inline style — no classes set background/text/border
+  const pillStyle = useMemo<React.CSSProperties>(() => {
+    return atTop
+      ? {
+          backgroundColor: 'rgba(255,255,255,0.9)',
+          color: '#0A1C7C',
+          border: '1px solid rgba(255,255,255,0.7)',
+        }
+      : {
+          backgroundColor: '#0A1C7C',
+          color: '#FFFFFF',
+          border: '1px solid #0A1C7C',
+        };
+  }, [atTop]);
 
   // Lock body scroll when mobile panel open
   useEffect(() => {
@@ -103,17 +127,21 @@ export default function TopNav() {
   }, [mobileOpen]);
 
   return (
-    <header role="banner" className={`fixed inset-x-0 top-0 z-50 isolate transition-colors ${headerFrame}`}>
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4">
+    <header
+      role="banner"
+      data-top={atTop}
+      className={`fixed inset-x-0 top-0 z-50 isolate transition-colors ${headerFrame}`}
+    >
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4">
         {/* Brand */}
         <Link href="/" aria-label={SITE_NAME} className="flex items-center">
           <div
             className={[
-              "flex items-center rounded-xl px-2.5 py-1.5 transition-colors",
-              scrolled
-                ? "bg-transparent border border-transparent"
-                : "bg-brand-deep/95 border border-white/10 shadow-sm",
-            ].join(" ")}
+              'flex items-center rounded-xl px-2.5 py-1.5 transition-colors',
+              atTop
+                ? 'bg-brand-deep/95 border border-white/10 shadow-sm'
+                : 'bg-transparent border border-transparent',
+            ].join(' ')}
           >
             <Image
               src="/images/nordblue-2-1.png"
@@ -127,8 +155,8 @@ export default function TopNav() {
           <span className="sr-only">{SITE_NAME}</span>
         </Link>
 
-        {/* Desktop nav (CSS hover dropdowns) */}
-        <nav className="relative ml-auto hidden items-center gap-2 text-sm md:flex">
+        {/* Desktop nav */}
+        <nav data-role="desktop-nav" className="relative ml-auto items-center gap-2 text-sm">
           {MENU.map((m) => {
             const activeTop = isActiveTop(m.href);
             const hasDropdown = (m.items?.length ?? 0) > 0;
@@ -139,7 +167,8 @@ export default function TopNav() {
                   key={m.key}
                   href={m.href}
                   aria-current={activeTop ? 'page' : undefined}
-                  className={linkClass(activeTop)}
+                  className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
+                  style={pillStyle}
                 >
                   {m.label}
                 </Link>
@@ -147,38 +176,34 @@ export default function TopNav() {
             }
 
             return (
-              <div key={m.key} className="relative group">
-                {/* Trigger */}
+              <div key={m.key} className="relative group inline-block">
                 <Link
                   href={m.href}
                   aria-haspopup="menu"
                   aria-expanded={undefined}
                   aria-current={activeTop ? 'page' : undefined}
-                  className={linkClass(activeTop)}
+                  className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
+                  style={pillStyle}
                 >
                   {m.label}
                 </Link>
 
-                {/* Hover bridge: prevents gap flicker between trigger and panel */}
+                {/* hover bridge */}
                 <span
                   aria-hidden
-                  className="
-                    absolute left-0 right-0 top-full h-2
-                    pointer-events-none
-                    group-hover:pointer-events-auto
-                    group-focus-within:pointer-events-auto
-                  "
+                  className="absolute left-0 right-0 top-full h-2 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto"
                 />
 
-                {/* PANEL — Option B: Squared outline card */}
+                {/* dropdown */}
                 <div
                   role="menu"
                   aria-label={m.label}
                   className="
-                    absolute left-0 top-full mt-2 z-50 w-72
-                    rounded-md border border-slate-200 bg-white shadow-xl
+                    absolute left-0 top-full mt-2 z-[60] w-72
+                    rounded-xl bg-white
+                    shadow-[0_16px_48px_rgba(0,0,0,0.35)] ring-1 ring-black/10
                     opacity-0 -translate-y-1 scale-95 pointer-events-none
-                    transition ease-out duration-150 origin-top
+                    transition ease-out duration-150 origin-top will-change-transform
                     group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 group-hover:pointer-events-auto
                     group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:pointer-events-auto
                   "
@@ -191,11 +216,7 @@ export default function TopNav() {
                           <Link
                             href={hrefResolved}
                             role="menuitem"
-                            className="
-                              block px-3 py-2 text-sm text-slate-800
-                              hover:bg-slate-50 focus:bg-slate-50
-                              focus:outline-none
-                            "
+                            className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
                           >
                             {a.label}
                           </Link>
@@ -212,8 +233,9 @@ export default function TopNav() {
         {/* Mobile hamburger */}
         <button
           type="button"
-          className="ml-auto inline-flex items-center justify-center rounded-xl border px-3 py-1.5 text-sm md:hidden
-                     text-brand-deep bg-brand-light/30 border-brand-light/60 hover:bg-brand-light/40"
+          data-role="mobile-btn"
+          className="ml-auto inline-flex items-center justify-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
+          style={pillStyle}
           aria-label="Open menu"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen(true)}
@@ -227,15 +249,14 @@ export default function TopNav() {
 
       {/* Mobile overlay */}
       <div
-        className={`md:hidden fixed inset-0 z-40 bg-black/30 transition-opacity ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-40 bg-black/30 transition-opacity ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setMobileOpen(false)}
         aria-hidden
       />
 
-      {/* Mobile panel (slide-down) */}
+      {/* Mobile panel */}
       <div
-        className={`md:hidden fixed inset-x-0 top-0 z-50 origin-top transform transition-transform
-                    ${mobileOpen ? 'translate-y-0' : '-translate-y-full'}`}
+        className={`fixed inset-x-0 top-0 z-50 origin-top transform transition-transform ${mobileOpen ? 'translate-y-0' : '-translate-y-full'}`}
         role="dialog"
         aria-modal="true"
       >
@@ -248,8 +269,7 @@ export default function TopNav() {
             </Link>
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-xl border px-3 py-1.5 text-sm
-                         text-slate-700 hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
               aria-label="Close menu"
               onClick={() => setMobileOpen(false)}
             >
