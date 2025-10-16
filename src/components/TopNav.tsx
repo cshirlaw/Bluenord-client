@@ -48,7 +48,6 @@ const MENU: MenuGroup[] = [
   items: [
     { href: '/investors', label: 'Overview' },
     { href: '/investors/new-reports', label: 'New Reports' }, // ← add this
-    { href: '/investors/reports', label: 'Reports' },         // keep or remove
     { href: '/investors/presentations', label: 'Presentations' },
     { href: '/investors/financial-calendar', label: 'Financial Calendar' },
     { href: '/investors/share', label: 'Share' },
