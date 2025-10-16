@@ -1,0 +1,46 @@
+{
+  "cards": [
+    {
+      "slug": "highlights",
+      "title": "Highlights",
+      "headline": "$ 1.5 bn",
+      "sub": "facility size",
+      "href": "/company/key-info/highlights"
+    },
+    {
+      "slug": "production",
+      "title": "Current Production Details",
+      "headline": "37,800 boe/d",
+      "sub": "Q2 2025 production",
+      "href": "/company/key-info/production"
+    },
+    {
+      "slug": "guidance-2025",
+      "title": "2025 Production Guidance",
+      "headline": "45,000 boe/d",
+      "sub": "by 2025",
+      "href": "/company/key-info/guidance-2025"
+    },
+    {
+      "slug": "resources",
+      "title": "Resources and Reserves",
+      "headline": "213,000,000 boe",
+      "sub": "2P reserves & 2C resources",
+      "href": "/company/key-info/resources"
+    },
+    {
+      "slug": "financials",
+      "title": "Financial Performance",
+      "headline": "$260M · $133M",
+      "sub": "Revenue · EBITDA (Q2 2025)",
+      "href": "/company/key-info/financials"
+    },
+    {
+      "slug": "capital",
+      "title": "Capital Structure",
+      "headline": "431 NOK · 11.4 B NOK",
+      "sub": "Share Price · Market Cap",
+      "href": "/company/key-info/capital"
+    }
+  ]
+}

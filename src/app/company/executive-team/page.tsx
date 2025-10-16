@@ -50,21 +50,22 @@ export default async function ExecutiveTeamPage() {
         <Breadcrumbs items={crumbs as any} />
       </div>
 
-      {/* Simple hero band (CSS bg to avoid Image optimizer) */}
+            {/* Hero band — same height as Board, no blue overlay */}
       <section
-        className="relative isolate mt-4 mb-10 overflow-hidden rounded-2xl border border-neutral-200 bg-[#0A1C7C]"
+        className="relative isolate mt-4 mb-10 overflow-hidden rounded-2xl border border-neutral-200"
         style={
           hero.image
             ? {
-                backgroundImage: `linear-gradient(rgba(10,28,124,.80), rgba(10,28,124,.80)), url('${hero.image}')`,
+                backgroundImage: `url('${hero.image}')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }
             : undefined
         }
       >
-        <div className="relative px-6 py-10 md:px-10">
-          <h1 className="text-2xl md:text-4xl font-semibold tracking-tight text-white">
+        {/* match Board hero height via same padding */}
+        <div className="relative px-6 py-14 md:px-10 md:py-16">
+          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-white drop-shadow">
             {hero.title ?? "Executive Team"}
           </h1>
         </div>
@@ -72,22 +73,22 @@ export default async function ExecutiveTeamPage() {
 
       {/* Intro */}
       {data.intro ? (
-        <section className="mb-8">
+        <section className="mb-6">
           <p className="text-lg text-neutral-800">{data.intro}</p>
         </section>
       ) : null}
 
-      {/* Cards with native details/summary (click to open bio) */}
-      <section className="space-y-4">
+      {/* Cards (match Board layout: 4 columns on large) */}
+      <section className="space-y-3">
         <h2 className="text-2xl font-semibold">Team</h2>
 
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {people.map((p) => (
             <li key={p.name}>
               <details className="group rounded-2xl border border-neutral-200 bg-white shadow-sm">
                 <summary className="list-none cursor-pointer">
                   <div className="rounded-2xl overflow-hidden">
-                    {/* Uncropped image */}
+                    {/* Same image box as Board */}
                     <div className="relative aspect-[4/3] bg-white">
                       {p.photo ? (
                         <img

@@ -1,86 +1,153 @@
-import HeroPrimary from "@/components/HeroPrimary";
-import Section from "@/components/Section";
-// Optional JSON wiring:
-// import contactJson from "@/content/contact.json";
-
+// src/app/contact/page.tsx
 export const metadata = {
-  title: "Contact | BlueNord",
-  description: "General enquiries and investor relations contact information.",
+  title: "Get in Touch | BlueNord",
+  description:
+    "Contact details for BlueNord offices in Copenhagen, London and Oslo, plus Investor Relations.",
 };
 
 export default function ContactPage() {
-  // If using JSON:
-  // const { offices, emails } = contactJson as {
-  //   offices?: Array<{ name: string; address: string }>;
-  //   emails?: Array<{ label: string; href: string }>;
-  // };
-
-  const offices = [
-    { name: "Head Office", address: "Example Street 12\n0123 Oslo\nNorway" },
-  ];
-  const emails = [
-    { label: "General enquiries", href: "mailto:info@example.com" },
-    { label: "Investor relations", href: "mailto:ir@example.com" },
-  ];
+  const brandBlue = "#0A1C7C";
+  const accent = "#98F18B";
 
   return (
-    <>
-      <HeroPrimary />
+    <main className="mx-auto max-w-6xl px-4 pb-24">
+      {/* Header band (simple, image-free to avoid optimizer issues) */}
+      <section className="relative isolate mt-6 mb-12 overflow-hidden rounded-2xl border border-neutral-200">
+        <div className="relative px-6 py-14 md:px-10 md:py-16">
+          <h1
+            className="text-4xl md:text-5xl font-semibold tracking-tight"
+            style={{ color: brandBlue }}
+          >
+            Get in Touch
+          </h1>
+        </div>
+      </section>
 
-      <Section title="Get in touch">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Emails / quick links */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold tracking-tight text-brand">Email</h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              {emails.map((e) => (
-                <li key={e.href}>
-                  <a href={e.href} className="underline hover:no-underline">{e.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* Intro */}
+      <section className="grid gap-10 md:grid-cols-2 mb-10">
+        <div />
+        <div className="text-[17px] leading-relaxed" style={{ color: brandBlue }}>
+          <p className="mb-4">
+            We would love to hear from you. Please reach out to our offices listed below
+            if you would like to get in touch with us. You are able to stay updated via
+            our press releases; please see subscription details at the bottom of this
+            page.
+          </p>
+          <p>Follow us on LinkedIn for updates and posts.</p>
+        </div>
+      </section>
 
-          {/* Simple contact form (mailto fallback) */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2">
-            <h3 className="text-lg font-semibold tracking-tight text-brand">Send a message</h3>
-            <form
-              className="mt-4 grid grid-cols-1 gap-4"
-              action="mailto:info@example.com"
-              method="post"
-              encType="text/plain"
+      {/* Offices + IR */}
+      <section className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        {/* Copenhagen */}
+        <div>
+          <h2 className="mb-2 text-2xl font-semibold" style={{ color: brandBlue }}>
+            Copenhagen
+          </h2>
+          <div className="mb-4 h-[2px] w-16" style={{ backgroundColor: accent }} />
+          <address className="not-italic leading-7 text-neutral-900">
+            <a
+              href="https://maps.apple.com/?address=Lyngbyvej%202,%20Vibenshus,%202100%20K%C3%B8benhavn,%20Denmark"
+              className="underline decoration-[1px] underline-offset-2 hover:opacity-80"
+              target="_blank"
+              rel="noreferrer"
             >
-              <label className="text-sm">
-                Name
-                <input className="mt-1 w-full rounded-md border px-3 py-2" name="name" required />
-              </label>
-              <label className="text-sm">
-                Email
-                <input className="mt-1 w-full rounded-md border px-3 py-2" type="email" name="email" required />
-              </label>
-              <label className="text-sm">
-                Message
-                <textarea className="mt-1 w-full rounded-md border px-3 py-2 min-h-[120px]" name="message" required />
-              </label>
-              <button className="self-start rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/90">
-                Send
-              </button>
-            </form>
-            {/* Later: we can swap this to a Next.js Server Action for real submissions */}
-          </div>
+              Lyngbyvej 2
+            </a>
+            <br />
+            Vibenshuset
+            <br />
+            2100 Copenhagen Ø
+            <br />
+            Denmark
+            <br />
+            <a
+              href="mailto:post@bluenord.com"
+              className="mt-2 inline-block underline decoration-[1px] underline-offset-2 text-[#0A1C7C] hover:opacity-80"
+            >
+              post@bluenord.com
+            </a>
+          </address>
         </div>
-      </Section>
 
-      <Section title="Offices">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {offices.map((o) => (
-            <div key={o.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold tracking-tight text-brand">{o.name}</h3>
-              <p className="mt-2 whitespace-pre-line text-sm text-slate-700">{o.address}</p>
-            </div>
-          ))}
+        {/* London */}
+        <div>
+          <h2 className="mb-2 text-2xl font-semibold" style={{ color: brandBlue }}>
+            London
+          </h2>
+          <div className="mb-4 h-[2px] w-16" style={{ backgroundColor: accent }} />
+          <address className="not-italic leading-7 text-neutral-900">
+            20 Balderton Street
+            <br />
+            London
+            <br />
+            W1K 6TL
+            <br />
+            <a
+              href="mailto:post@bluenord.com"
+              className="mt-2 inline-block underline decoration-[1px] underline-offset-2 text-[#0A1C7C] hover:opacity-80"
+            >
+              post@bluenord.com
+            </a>
+          </address>
         </div>
-      </Section>
-    </>
+
+        {/* Oslo */}
+        <div>
+          <h2 className="mb-2 text-2xl font-semibold" style={{ color: brandBlue }}>
+            Oslo
+          </h2>
+          <div className="mb-4 h-[2px] w-16" style={{ backgroundColor: accent }} />
+          <address className="not-italic leading-7 text-neutral-900">
+            <a
+              href="https://maps.apple.com/?address=Nedre%20Vollgate%203,%200158%20Oslo,%20Norway"
+              className="underline decoration-[1px] underline-offset-2 hover:opacity-80"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Nedre Vollgate 3
+            </a>
+            <br />
+            0158 Oslo
+            <br />
+            Norway
+            <br />
+            <a
+              href="tel:+4722336000"
+              className="mt-2 inline-block underline decoration-[1px] underline-offset-2 text-[#0A1C7C] hover:opacity-80"
+            >
+              +47 22 33 60 00
+            </a>
+            <br />
+            <a
+              href="mailto:post@bluenord.com"
+              className="mt-1 inline-block underline decoration-[1px] underline-offset-2 text-[#0A1C7C] hover:opacity-80"
+            >
+              post@bluenord.com
+            </a>
+          </address>
+        </div>
+
+        {/* Investor Relations */}
+        <div>
+          <h2 className="mb-2 text-2xl font-semibold" style={{ color: brandBlue }}>
+            Investor Relations
+          </h2>
+          <div className="mb-4 h-[2px] w-16" style={{ backgroundColor: accent }} />
+          <p className="leading-7 text-neutral-900">
+            <span className="font-semibold">Cathrine Torgersen</span>
+            <br />
+            EVP Investor Relations &amp; ESG
+            <br />
+            <a
+              href="mailto:ct@bluenord.com"
+              className="mt-2 inline-block underline decoration-[1px] underline-offset-2 text-[#0A1C7C] hover:opacity-80"
+            >
+              ct@bluenord.com
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }

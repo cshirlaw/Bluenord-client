@@ -13,19 +13,21 @@ type MenuGroup = { key: string; label: string; href: string; items?: MenuItem[] 
 
 const MENU: MenuGroup[] = [
   { key: 'home', label: HOME_LABEL, href: '/' },
+
   {
     key: 'company',
     label: 'Company',
     href: '/company',
     items: [
       { href: '/company', label: 'At a glance' },
-      { href: '/company/board-of-directors', label: 'Board of Directors' }, // ← added
+      { href: '/company/board-of-directors', label: 'Board of Directors' },
       { href: '/company/executive-team', label: 'Executive Team' },
       { href: '/company/governance', label: 'Governance' },
-      { href: '/company/people-culture', label: 'People & Culture' },
+      { href: '/company/people-culture', label: 'Our Values' },
       { href: '/company/operational-excellence', label: 'Operational Excellence' },
     ],
   },
+
   {
     key: 'assets',
     label: 'Assets',
@@ -38,21 +40,24 @@ const MENU: MenuGroup[] = [
       { href: '/assets/gorm', label: 'Gorm' },
     ],
   },
+
   {
-    key: 'investors',
-    label: 'Investors',
-    href: '/investors',
-    items: [
-      { href: '/investors', label: 'Overview' },
-      { href: '/investors/reports', label: 'Reports' },
-      { href: '/investors/presentations', label: 'Presentations' },
-      { href: '/investors/financial-calendar', label: 'Financial Calendar' },
-      { href: '/investors/share', label: 'Share' },
-      { href: '/investors/debt', label: 'Debt' },
-      { href: '/investors/news', label: 'News' },
-      { href: '/investors/contacts', label: 'Contacts' },
-    ],
-  },
+  key: 'investors',
+  label: 'Investors',
+  href: '/investors',
+  items: [
+    { href: '/investors', label: 'Overview' },
+    { href: '/investors/new-reports', label: 'New Reports' }, // ← add this
+    { href: '/investors/reports', label: 'Reports' },         // keep or remove
+    { href: '/investors/presentations', label: 'Presentations' },
+    { href: '/investors/financial-calendar', label: 'Financial Calendar' },
+    { href: '/investors/share', label: 'Share' },
+    { href: '/investors/debt', label: 'Debt' },
+    { href: '/investors/news', label: 'News' },
+    { href: '/investors/contacts', label: 'Contacts' },
+  ],
+},
+
   {
     key: 'financials',
     label: 'Financials',
@@ -103,7 +108,7 @@ export default function TopNav() {
   // HEADER background (still flips)
   const headerFrame = atTop ? 'bg-transparent' : 'bg-nav-bg backdrop-blur-md shadow-sm';
 
-  // 🔒 Pills’ inline style — no classes set background/text/border
+  // Pills’ inline style — no classes set background/text/border
   const pillStyle = useMemo<React.CSSProperties>(() => {
     return atTop
       ? {

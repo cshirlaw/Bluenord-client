@@ -5,7 +5,13 @@ import KeyInfoGrid from "@/components/KeyInfoGrid";
 import VideoEmbed from "@/components/VideoEmbed";
 
 type CTA = { label: string; href: string };
-type KeyCard = { heading: string; metric: string; sub?: string; kicker?: string; expandHref?: string };
+type KeyCard = {
+  heading: string;
+  metric: string;
+  sub?: string;
+  kicker?: string;
+  expandHref?: string;
+};
 
 type HomeFile = {
   hero: {
@@ -24,15 +30,54 @@ type HomeFile = {
   keyInfo?: { title: string; cards: KeyCard[] };
 };
 
+// New-format content file (optional)
+type NewKeyInfoJSON = {
+  cards: Array<{
+    slug: string;
+    title: string;
+    headline: string;
+    sub?: string;
+    href: string;
+  }>;
+};
+
 async function loadHome(): Promise<HomeFile> {
-  const file = await fs.readFile(path.join(process.cwd(), "src/content/home.json"), "utf8");
+  const file = await fs.readFile(
+    path.join(process.cwd(), "src/content/home.json"),
+    "utf8"
+  );
   return JSON.parse(file) as HomeFile;
+}
+
+// If present, prefer this over home.json->keyInfo
+async function loadNewKeyInfo(): Promise<{ title: string; cards: KeyCard[] } | null> {
+  try {
+    const file = await fs.readFile(
+      path.join(process.cwd(), "src/content/home-keyinfo.json"),
+      "utf8"
+    );
+    const json = JSON.parse(file) as NewKeyInfoJSON;
+
+    const cards: KeyCard[] = (json.cards ?? []).map((c) => ({
+      heading: c.title,
+      metric: c.headline,
+      sub: c.sub,
+      expandHref: c.href,
+    }));
+
+    return { title: "BlueNord Key Information", cards };
+  } catch {
+    return null;
+  }
 }
 
 export const dynamic = "force-static";
 
 export default async function HomePage() {
   const { hero, keyInfo } = await loadHome();
+  const newKeyInfo = await loadNewKeyInfo();
+
+  const keyInfoToRender = newKeyInfo ?? keyInfo ?? null;
 
   return (
     <main className="min-h-screen overflow-x-hidden">
@@ -46,8 +91,8 @@ export default async function HomePage() {
         ctas={hero.ctas}
       />
 
-      {keyInfo?.cards?.length ? (
-        <KeyInfoGrid title={keyInfo.title} cards={keyInfo.cards} />
+      {keyInfoToRender?.cards?.length ? (
+        <KeyInfoGrid title={keyInfoToRender.title} cards={keyInfoToRender.cards} />
       ) : null}
 
       {/* Rebrand video */}

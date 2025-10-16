@@ -50,13 +50,13 @@ export default async function BoardPage() {
         <Breadcrumbs items={crumbs as any} />
       </div>
 
-      {/* Simple hero band (CSS bg to avoid optimizer issues) */}
+      {/* Hero band (no blue wash) */}
       <section
-        className="relative isolate mt-4 mb-10 overflow-hidden rounded-2xl border border-neutral-200 bg-[#0A1C7C]"
+        className="relative isolate mt-4 mb-10 overflow-hidden rounded-2xl border border-neutral-200"
         style={
           hero.image
             ? {
-                backgroundImage: `linear-gradient(rgba(10,28,124,.85), rgba(10,28,124,.85)), url('${hero.image}')`,
+                backgroundImage: `url('${hero.image}')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }
@@ -64,7 +64,7 @@ export default async function BoardPage() {
         }
       >
         <div className="relative px-6 py-14 md:px-10 md:py-16">
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-white">
+          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-white drop-shadow">
             {hero.title ?? "Our Board of Directors"}
           </h1>
         </div>
@@ -72,58 +72,57 @@ export default async function BoardPage() {
 
       {/* Intro */}
       {data.intro ? (
-        <section className="mb-10">
+        <section className="mb-8">
           <p className="text-lg text-neutral-800">{data.intro}</p>
         </section>
       ) : null}
 
-      {/* Cards with native details/summary (click image or header to toggle bio) */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Board</h2>
+      {/* Compact cards that fit photo size */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-semibold">Board</h2>
 
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="flex flex-wrap gap-4">
           {people.map((p) => (
-            <li key={p.name}>
-              <details className="group rounded-2xl border border-neutral-200 bg-white shadow-sm">
+            <li key={p.name} className="w-[240px]">
+              <details className="group rounded-xl border border-neutral-200 bg-white shadow-sm text-sm">
                 <summary className="list-none cursor-pointer">
-                  <div className="rounded-2xl overflow-hidden">
-                    {/* Uncropped image */}
-                    <div className="relative aspect-[4/3] bg-white">
-                      {p.photo ? (
-                        <img
-                          src={p.photo}
-                          alt={p.name}
-                          className="absolute inset-0 h-full w-full object-contain"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-neutral-400">
-                          No photo
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="p-4">
-                      <div className="text-lg font-semibold text-neutral-900">
-                        {p.name}
+                  {/* Photo box (compact) */}
+                  <div className="relative aspect-[4/3] bg-white max-h-32 sm:max-h-36 w-full p-1.5 rounded-t-xl overflow-hidden">
+                    {p.photo ? (
+                      <img
+                        src={p.photo}
+                        alt={p.name}
+                        className="absolute inset-0 h-full w-full object-contain"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-neutral-400">
+                        No photo
                       </div>
-                      {p.role && (
-                        <div className="text-sm font-medium text-[#0A1C7C]">
-                          {p.role}
-                        </div>
-                      )}
-                      {p.bio && (
-                        <div className="pt-1 text-xs text-neutral-500">
-                          <span className="group-open:hidden">Click to read bio</span>
-                          <span className="hidden group-open:inline">Click to close</span>
-                        </div>
-                      )}
+                    )}
+                  </div>
+
+                  {/* Text (compact) */}
+                  <div className="p-3">
+                    <div className="text-base font-semibold text-neutral-900">
+                      {p.name}
                     </div>
+                    {p.role && (
+                      <div className="text-xs font-medium text-[#0A1C7C]">
+                        {p.role}
+                      </div>
+                    )}
+                    {p.bio && (
+                      <div className="pt-1 text-[11px] text-neutral-500">
+                        <span className="group-open:hidden">Click to read bio</span>
+                        <span className="hidden group-open:inline">Click to close</span>
+                      </div>
+                    )}
                   </div>
                 </summary>
 
                 {p.bio && (
-                  <div className="border-t px-4 py-4 sm:px-6">
+                  <div className="border-t px-4 py-4">
                     <article className="prose prose-neutral max-w-none">
                       {p.bio.split("\n\n").map((para, i) => (
                         <p key={i}>{para}</p>

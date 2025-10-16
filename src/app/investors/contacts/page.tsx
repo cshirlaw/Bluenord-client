@@ -7,7 +7,7 @@ export default function IRContactsPage() {
     <>
       {/* Hero with subtle gradient overlay */}
       <PageHero
-        imageSrc="/images/hero/hero.jpg"
+        imageSrc="/images/pages/company/investors-hero.jpg"
         imageAlt="Investor Relations contacts"
         title="Investor Relations contacts"
         intro="Get in touch with our Investor Relations team."
@@ -17,21 +17,22 @@ export default function IRContactsPage() {
         mode="contain"
       />
 
-      <main className="mx-auto max-w-6xl px-4 pb-10 space-y-4">
+      <main className="mx-auto max-w-6xl px-4 pb-10 space-y-6">
         <h1 className="sr-only">Investor Relations contacts</h1>
 
-        <ul className="list-disc pl-5 text-sm opacity-80">
+        <ul className="list-disc pl-5 text-[15px] leading-7">
           <li>
-            Example: Jane Smith — Head of Investor Relations —{" "}
-            <a href="mailto:ir@bluenord.com" className="underline">ir@bluenord.com</a>
-          </li>
-          <li>
-            Example: John Doe — Investor Relations Manager —{" "}
-            <a href="mailto:john.doe@bluenord.com" className="underline">john.doe@bluenord.com</a>
+            <span className="font-medium">Cathrine Torgersen</span> — EVP Investor Relations &amp; ESG —{" "}
+            <a
+              href="mailto:ct@bluenord.com"
+              className="underline underline-offset-2 text-[#0A1C7C] hover:opacity-80"
+            >
+              ct@bluenord.com
+            </a>
           </li>
         </ul>
 
-        <Link href="/investors" className="underline text-sm">
+        <Link href="/investors" className="inline-flex items-center gap-2 text-[15px] underline underline-offset-2 hover:opacity-80">
           ← Back to Investors
         </Link>
       </main>

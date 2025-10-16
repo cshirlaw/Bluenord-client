@@ -1,29 +1,27 @@
-import React from "react";
+// src/components/Section.tsx
+import * as React from "react";
 
-export default function Section({
-  eyebrow,
-  title,
-  desc,
-  children,
-}: {
+type Props = {
   eyebrow?: string;
   title?: string;
-  desc?: string;
+  className?: string;
   children: React.ReactNode;
-}) {
+};
+
+export default function Section({ eyebrow, title, className, children }: Props) {
   return (
-    <section className="pt-6">
-      <div className="border-t"></div>
-      <div className="py-6">
-        {(eyebrow || title || desc) && (
-          <header className="mb-4 space-y-1">
-            {eyebrow ? <div className="text-[11px] uppercase tracking-[0.08em] text-gray-500">{eyebrow}</div> : null}
-            {title ? <h2 className="text-xl font-semibold">{title}</h2> : null}
-            {desc ? <p className="text-[13.5px] text-gray-600 leading-relaxed">{desc}</p> : null}
-          </header>
-        )}
-        {children}
-      </div>
+    <section className={["space-y-3", className ?? ""].join(" ")}>
+      {(eyebrow || title) && (
+        <header className="mb-2">
+          {eyebrow && (
+            <div className="text-xs uppercase tracking-wide text-neutral-500">
+              {eyebrow}
+            </div>
+          )}
+          {title && <h2 className="text-xl font-semibold">{title}</h2>}
+        </header>
+      )}
+      {children}
     </section>
   );
 }
