@@ -23,7 +23,7 @@ export default function PageHero({
   eyebrow,
   align = "center",     // vertical anchor (contain)
   focus = "center",     // object-position bias
-  hAlign = "left",      // DEFAULT LEFT ALIGN across the site
+  hAlign = "left",      // default LEFT
 }: {
   imageSrc?: string;
   image?: string;
@@ -43,7 +43,7 @@ export default function PageHero({
 }) {
   const src = imageSrc ?? image;
 
-  // Height caps
+  // Height caps (contain mode)
   const containCap =
     size === "compact"
       ? "h-[14rem] sm:h-[16rem] lg:h-[18rem]"
@@ -78,15 +78,13 @@ export default function PageHero({
       <section className="relative">
         <div className="relative mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
           {src && (
-            // FRAME hugs the image width: inline-block (no full width), left-aligned by default
             <div
               className={[
                 "inline-block overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm",
                 containCap,
-                "max-w-full", // avoid overflow on very small screens
+                "max-w-full",
               ].join(" ")}
             >
-              {/* Fixed-height frame; image fully contained; left/center + vertical anchors */}
               <div className={`relative flex h-full w-auto ${vAlign} ${hJustify}`}>
                 <Image
                   src={src}
@@ -97,12 +95,6 @@ export default function PageHero({
                   sizes="(max-width: 1024px) 100vw, 1024px"
                   priority
                 />
-                {overlay !== "none" && (
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={overlay === "tint" ? tintStyle : gradientStyle}
-                  />
-                )}
               </div>
             </div>
           )}
@@ -128,8 +120,12 @@ export default function PageHero({
   }
 
   // ---------- Cover mode (edge-to-edge) ----------
+  // Make the entire background NON-INTERACTIVE so it never blocks clicks below.
   return (
-    <section className="relative overflow-hidden">
+    <section
+      className="relative overflow-hidden isolate z-0"
+      style={{ pointerEvents: "none" }}
+    >
       {src && (
         <Image
           src={src}
@@ -141,12 +137,19 @@ export default function PageHero({
       )}
 
       {overlay !== "none" ? (
-        <div className="pointer-events-none absolute inset-0 z-0" style={overlay === "tint" ? tintStyle : gradientStyle} />
+        <div
+          className="pointer-events-none absolute inset-0 z-0"
+          style={overlay === "tint" ? tintStyle : gradientStyle}
+        />
       ) : (
         <div className="pointer-events-none absolute inset-0 z-0 bg-black/10" />
       )}
 
-      <div className={`relative z-10 mx-auto max-w-6xl px-4 ${pad} ${minH} flex flex-col justify-end`}>
+      {/* Re-enable clicks ONLY for the hero text block */}
+      <div
+        className={`relative z-10 mx-auto max-w-6xl px-4 ${pad} ${minH} flex flex-col justify-end`}
+        style={{ pointerEvents: "auto" }}
+      >
         {titleBox ? (
           <div className="inline-block rounded-3xl bg-[rgba(10,42,106,0.95)] px-6 py-4 text-white shadow-lg">
             {eyebrow && <p className="text-sm text-[rgba(140,224,255,0.95)]">{eyebrow}</p>}

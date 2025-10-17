@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: [
@@ -12,7 +13,7 @@ const config: Config = {
       colors: {
         /* --- Core brand scale (kept) ------------------------------------- */
         brand: {
-          DEFAULT: "#0A3D91", // primary BlueNord colour (existing)
+          DEFAULT: "#0A3D91",
           50:  "#EEF3FB",
           100: "#DCE7F6",
           200: "#B7CEF0",
@@ -23,36 +24,42 @@ const config: Config = {
           700: "#184484",
           800: "#123362",
           900: "#0C2547",
-
-          /* --- Subtle additions from approved design -------------------- */
-          deep:   "#0A2A6A",  // hero overlay / title-box navy
-          accent: "#00A3E0",  // bright cyan accent
-          light:  "#8CE0FF",  // light aqua highlight (use sparingly)
+          deep:   "#0A2A6A",
+          accent: "#00A3E0",
+          light:  "#8CE0FF",
         },
-
-        /* --- Semantic helpers (optional, for consistency) ---------------- */
         ink: {
-          heading: "#0A2A4A",  // slightly softer than black for H1–H3
-          body:    "#0f172a",  // base body text (matching current)
-          muted:   "#475569",  // secondary text
+          heading: "#0A2A4A",
+          body:    "#0f172a",
+          muted:   "#475569",
         },
         surface: {
           card:   "#FFFFFF",
-          tint:   "#F7FAFF",                // very light blue wash
-          overlay: "rgba(10,42,106,0.08)",  // subtle blue tint overlay
+          tint:   "#F7FAFF",
+          overlay: "rgba(10,42,106,0.08)",
         },
         line: {
-          DEFAULT: "#E5E7EB",  // borders you already use
-          strong:  "#C7D2E1",  // a touch stronger for emphasis
+          DEFAULT: "#E5E7EB",
+          strong:  "#C7D2E1",
         },
-        nav: {
-          // translucent deep-blue for sticky headers / drawers
-          bg: "rgba(10,42,106,0.85)",
-        },
+        nav: { bg: "rgba(10,42,106,0.85)" },
       },
+
+      // Optional: tweak default prose styles slightly
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.ink.body"),
+            h1: { color: theme("colors.ink.heading") },
+            h2: { color: theme("colors.ink.heading") },
+            h3: { color: theme("colors.ink.heading") },
+            a:  { color: theme("colors.brand.700"), textDecoration: "none" },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;

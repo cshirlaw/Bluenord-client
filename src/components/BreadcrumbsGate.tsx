@@ -21,9 +21,10 @@ try {
 } catch {}
 
 function titleize(s: string) {
-  return s.replace(/[-_]+/g, ' ')
-          .replace(/\b\w/g, (m) => m.toUpperCase())
-          .replace(/\bQ(\d)\b/gi, 'Q$1');
+  return s
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (m) => m.toUpperCase())
+    .replace(/\bQ(\d)\b/gi, 'Q$1');
 }
 
 function getPrettyLabel(seg: string): string {
@@ -50,7 +51,9 @@ export default function BreadcrumbsGate() {
     pathname.startsWith('/investors') ||
     pathname.startsWith('/financials') ||
     (INCLUDE_ASSETS && pathname.startsWith('/assets')) ||
-    pathname.startsWith('/company');
+    pathname.startsWith('/company') ||
+    pathname.startsWith('/energy-security') ||
+    pathname.startsWith('/energy-transition');
 
   if (!show) return null;
 
@@ -65,12 +68,24 @@ export default function BreadcrumbsGate() {
     }),
   ];
 
-  // “Logo notch”: before scroll the logo pill sits top-left, so add left padding.
-  const notchLeft = scrolled ? '' : 'pl-[140px] sm:pl-[160px]';
+  // Only these routes need a little vertical nudge:
+  const needsEnergyOffset =
+    pathname.startsWith('/energy-security') ||
+    pathname.startsWith('/energy-transition');
+
+  // Smaller “logo notch” on the left until we’ve scrolled
+  const notchLeft = scrolled ? '' : 'pl-[120px] sm:pl-[140px]';
+
+  // Light top padding only on the two energy pages (tune if needed)
+  const topPad = needsEnergyOffset ? 'pt-8 md:pt-10' : '';
 
   return (
-  <div className={`${notchLeft} relative z-[60] pointer-events-auto`}>
-    <Breadcrumbs items={items} />
-  </div>
-);
+    // z-10 so it sits *below* header/dropdowns; wrapper ignores stray clicks
+    <div className={`relative z-10 pointer-events-none ${notchLeft} ${topPad}`}>
+      {/* Breadcrumb links themselves remain clickable */}
+      <div className="pointer-events-auto">
+        <Breadcrumbs items={items} />
+      </div>
+    </div>
+  );
 }
