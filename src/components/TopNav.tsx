@@ -42,20 +42,20 @@ const MENU: MenuGroup[] = [
   },
 
   {
-  key: 'investors',
-  label: 'Investors',
-  href: '/investors',
-  items: [
-    { href: '/investors', label: 'Overview' },
-    { href: '/investors/new-reports', label: 'New Reports' }, // ← add this
-    { href: '/investors/presentations', label: 'Presentations' },
-    { href: '/investors/financial-calendar', label: 'Financial Calendar' },
-    { href: '/investors/share', label: 'Share' },
-    { href: '/investors/debt', label: 'Debt' },
-    { href: '/investors/news', label: 'News' },
-    { href: '/investors/contacts', label: 'Contacts' },
-  ],
-},
+    key: 'investors',
+    label: 'Investors',
+    href: '/investors',
+    items: [
+      { href: '/investors', label: 'Overview' },
+      /* removed: { href: '/investors/new-reports', label: 'New Reports' }, */
+      { href: '/investors/presentations', label: 'Presentations' },
+      { href: '/investors/financial-calendar', label: 'Financial Calendar' },
+      { href: '/investors/share', label: 'Share' },
+      { href: '/investors/debt', label: 'Debt' },
+      { href: '/investors/news', label: 'News' },
+      { href: '/investors/contacts', label: 'Contacts' },
+    ],
+  },
 
   {
     key: 'financials',

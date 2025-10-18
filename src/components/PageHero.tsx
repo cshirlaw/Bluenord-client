@@ -23,7 +23,7 @@ export default function PageHero({
   eyebrow,
   align = "center",     // vertical anchor (contain)
   focus = "center",     // object-position bias
-  hAlign = "left",      // default LEFT
+  hAlign = "left",
 }: {
   imageSrc?: string;
   image?: string;
@@ -43,7 +43,7 @@ export default function PageHero({
 }) {
   const src = imageSrc ?? image;
 
-  // Height caps (contain mode)
+  // Height caps
   const containCap =
     size === "compact"
       ? "h-[14rem] sm:h-[16rem] lg:h-[18rem]"
@@ -72,10 +72,10 @@ export default function PageHero({
   const focusClass =
     focus === "bottom" ? "object-bottom" : focus === "top" ? "object-top" : "object-center";
 
-  // ---------- Contain mode (no crop) ----------
+  // ---------- Contain mode (boxed hero) ----------
   if (mode === "contain") {
     return (
-      <section className="relative">
+      <section className="relative z-0">
         <div className="relative mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
           {src && (
             <div
@@ -119,37 +119,25 @@ export default function PageHero({
     );
   }
 
-  // ---------- Cover mode (edge-to-edge) ----------
-  // Make the entire background NON-INTERACTIVE so it never blocks clicks below.
+  // ---------- Cover mode (banner) ----------
   return (
-    <section
-      className="relative overflow-hidden isolate z-0"
-      style={{ pointerEvents: "none" }}
-    >
+    <section className="relative z-0 overflow-hidden">
       {src && (
-        <Image
-          src={src}
-          alt={imageAlt ?? ""}
-          fill
-          priority
-          className={`object-cover ${focusClass}`}
-        />
+        <div className={`relative w-full ${minH}`}>
+          <Image
+            src={src}
+            alt={imageAlt ?? ""}
+            fill
+            priority
+            className={`object-cover ${focusClass}`}
+          />
+          {overlay !== "none" ? (
+            <div className="absolute inset-0" style={overlay === "tint" ? tintStyle : gradientStyle} />
+          ) : null}
+        </div>
       )}
 
-      {overlay !== "none" ? (
-        <div
-          className="pointer-events-none absolute inset-0 z-0"
-          style={overlay === "tint" ? tintStyle : gradientStyle}
-        />
-      ) : (
-        <div className="pointer-events-none absolute inset-0 z-0 bg-black/10" />
-      )}
-
-      {/* Re-enable clicks ONLY for the hero text block */}
-      <div
-        className={`relative z-10 mx-auto max-w-6xl px-4 ${pad} ${minH} flex flex-col justify-end`}
-        style={{ pointerEvents: "auto" }}
-      >
+      <div className={`relative mx-auto max-w-6xl px-4 -mt-24 sm:-mt-28 ${pad}`}>
         {titleBox ? (
           <div className="inline-block rounded-3xl bg-[rgba(10,42,106,0.95)] px-6 py-4 text-white shadow-lg">
             {eyebrow && <p className="text-sm text-[rgba(140,224,255,0.95)]">{eyebrow}</p>}
