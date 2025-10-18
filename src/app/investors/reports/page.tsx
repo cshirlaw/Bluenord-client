@@ -92,13 +92,15 @@ export default async function ReportsPage({
 }) {
   const { items, years } = await loadManifest();
 
+  // ---- read and normalize params (never keep "all" in Kind-typed value)
   const yearSel = searchParams?.year && searchParams.year !== "all" ? Number(searchParams.year) : null;
-  const typeSel = (searchParams?.type as Kind | undefined) ?? undefined;
+  const typeParam = (searchParams?.type ?? "all") as Kind | "all";
+  const typeSel: Kind | null = typeParam === "all" ? null : typeParam;
   const q = (searchParams?.q ?? "").trim().toLowerCase();
 
   const filtered = items.filter((it) => {
     if (yearSel && it.year !== yearSel) return false;
-    if (typeSel && typeSel !== "all" && (it.kind ?? "report") !== typeSel) return false;
+    if (typeSel && (it.kind ?? "report") !== typeSel) return false;
     if (q) {
       const title = (it.title || "").toLowerCase();
       const file = it.href.split("/").pop()?.toLowerCase() || "";
@@ -115,7 +117,7 @@ export default async function ReportsPage({
 
   // current param values (strings) for link builders
   const yearStr = yearSel ? String(yearSel) : "all";
-  const typeStr = (typeSel ?? "all") as string;
+  const typeStr = typeSel ?? "all";
   const qStr = searchParams?.q ?? "";
 
   return (
@@ -161,7 +163,11 @@ export default async function ReportsPage({
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="text-slate-600 font-medium mr-1">Type</span>
             {(["all", "report", "presentation", "annual", "other"] as const).map((t) => {
-              const label = t === "report" ? "Reports" : t === "presentation" ? "Presentations" : t === "annual" ? "Annual" : t === "other" ? "Other" : "All";
+              const label =
+                t === "report" ? "Reports" :
+                t === "presentation" ? "Presentations" :
+                t === "annual" ? "Annual" :
+                t === "other" ? "Other" : "All";
               const active = typeStr === t;
               return (
                 <Link
@@ -176,11 +182,7 @@ export default async function ReportsPage({
           </div>
 
           {/* Search (plain GET) */}
-          <form
-            action="/investors/reports"
-            method="get"
-            className="flex items-center gap-2"
-          >
+          <form action="/investors/reports" method="get" className="flex items-center gap-2">
             {/* keep existing selection via hidden inputs */}
             {yearStr !== "all" && <input type="hidden" name="year" value={yearStr} />}
             {typeStr !== "all" && <input type="hidden" name="type" value={typeStr} />}
