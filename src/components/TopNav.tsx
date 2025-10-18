@@ -47,7 +47,7 @@ const MENU: MenuGroup[] = [
     href: '/investors',
     items: [
       { href: '/investors', label: 'Overview' },
-      /* removed: { href: '/investors/new-reports', label: 'New Reports' }, */
+      { href: '/investors/reports', label: 'Reports' },          // ← points to new page
       { href: '/investors/presentations', label: 'Presentations' },
       { href: '/investors/financial-calendar', label: 'Financial Calendar' },
       { href: '/investors/share', label: 'Share' },
@@ -69,8 +69,7 @@ const MENU: MenuGroup[] = [
   },
 ];
 
-const normalizeHref = (item: { href: string; label: string }) =>
-  item.label === 'Presentations' ? '/financials' : item.href;
+const normalizeHref = (item: { href: string; label: string }) => item.href;
 
 export default function TopNav() {
   const pathname = usePathname() || '/';
@@ -82,14 +81,14 @@ export default function TopNav() {
   const [atTop, setAtTop] = useState(true);
   useEffect(() => {
     const threshold = 80;
-    const update = () =>
-      setAtTop(
-        (window.scrollY ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop ||
-          0) < threshold
-      );
-
+    const update = () => {
+      const y =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      setAtTop(y < threshold);
+    };
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);

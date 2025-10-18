@@ -102,7 +102,7 @@ export default function PageHero({
 
         <div className="mx-auto max-w-6xl px-4 mt-6 sm:mt-8 pb-6 sm:pb-8">
           {titleBox ? (
-            <div className="inline-block rounded-3xl bg-[rgba(10,42,106,0.95)] px-6 py-4 text-white shadow-lg">
+            <div className="inline-block rounded-3xl bg[rgba(10,42,106,0.95)] px-6 py-4 text-white shadow-lg">
               {eyebrow && <p className="text-sm text-[rgba(140,224,255,0.95)]">{eyebrow}</p>}
               <h1 className="mt-1 text-3xl sm:text-5xl font-semibold leading-tight">{title}</h1>
               {intro ? <p className="mt-2 max-w-2xl text-white/90 text-sm sm:text-base">{intro}</p> : null}
@@ -123,16 +123,20 @@ export default function PageHero({
   return (
     <section className="relative z-0 overflow-hidden">
       {src && (
-        <div className={`relative w-full ${minH}`}>
+        // prevent hero from stealing clicks below
+        <div className={`relative w-full ${minH} pointer-events-none`}>
           <Image
             src={src}
             alt={imageAlt ?? ""}
             fill
             priority
-            className={`object-cover ${focusClass}`}
+            className={`object-cover ${focusClass} pointer-events-none`}
           />
           {overlay !== "none" ? (
-            <div className="absolute inset-0" style={overlay === "tint" ? tintStyle : gradientStyle} />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={overlay === "tint" ? tintStyle : gradientStyle}
+            />
           ) : null}
         </div>
       )}

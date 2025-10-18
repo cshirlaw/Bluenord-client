@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import Section from "@/components/Section";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs, { type Crumb } from "@/components/Breadcrumbs";
 
 export const metadata = {
   title: "CO₂ Storage | BlueNord",
@@ -11,13 +11,15 @@ export const metadata = {
 };
 
 export default function CO2StoragePage() {
-  const HOME_LABEL = process.env.NEXT_PUBLIC_HOME_LABEL ?? "HomeClient";
-  const crumbs = [
-    { label: HOME_LABEL, href: "/" },
+  const crumbs: Crumb[] = [
+    { label: "Home", href: "/" },
     { label: "Energy Transition", href: "/energy-transition" },
-    { label: "Reducing Emissions through Investments", href: "/energy-transition/investments" },
+    {
+      label: "Reducing Emissions through Investments",
+      href: "/energy-transition/investments",
+    },
     { label: "CO₂ Storage", current: true },
-  ] as const;
+  ];
 
   return (
     <main className="mx-auto max-w-6xl px-4 space-y-12 pb-16">

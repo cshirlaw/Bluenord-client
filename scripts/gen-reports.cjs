@@ -1,87 +1,113 @@
 // scripts/gen-reports.cjs
-// Build a manifest from /public/reports/<year>/*.pdf → /public/reports/manifest.json
+// Recursively scan /public/reports/**.pdf → /public/reports/manifest.json
+// Works with nested folders; infers year from folder name or filename or file mtime.
 
 const fs = require("node:fs/promises");
 const path = require("node:path");
+
+async function exists(p) {
+  try { await fs.access(p); return true; } catch { return false; }
+}
+
+async function walk(dir) {
+  const out = [];
+  let entries = [];
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const e of entries) {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) {
+      out.push(...await walk(full));
+    } else if (e.isFile() && e.name.toLowerCase().endsWith(".pdf")) {
+      out.push(full);
+    }
+  }
+  return out;
+}
+
+function prettyTitle(filename) {
+  return filename
+    .replace(/\.pdf$/i, "")
+    .replace(/[_\-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function inferDateFromName(name) {
+  // 2025-09-10 / 20250910 / 2025_09_10 etc.
+  const m = name.match(/(20\d{2})[-_\.]?(0[1-9]|1[0-2])[-_\.]?(0[1-9]|[12]\d|3[01])/);
+  if (!m) return undefined;
+  const [, y, mo, d] = m;
+  return `${y}-${mo}-${d}`;
+}
+
+function inferYearFromPath(relFromPublic, dateFromName) {
+  // Expect like "reports/2024/file.pdf" or deeper.
+  const parts = relFromPublic.split(path.sep);
+  // Find a 4-digit year segment anywhere in the path
+  const yPart = parts.find(seg => /^\d{4}$/.test(seg));
+  if (yPart) return Number(yPart);
+  // Fallback to year from date in filename
+  if (dateFromName) return Number(dateFromName.slice(0, 4));
+  return undefined;
+}
 
 async function main() {
   const publicDir = path.join(process.cwd(), "public");
   const reportsRoot = path.join(publicDir, "reports");
 
-  // If /public/reports doesn't exist, create empty manifest and exit
-  try {
-    await fs.access(reportsRoot);
-  } catch {
+  if (!(await exists(reportsRoot))) {
     await writeManifest({ items: [], years: [] });
-    console.log("No /public/reports directory found. Wrote empty manifest.");
+    console.log("No public/reports directory found. Wrote empty manifest.");
     return;
   }
 
-  // Collect year folders
-  const entries = await fs.readdir(reportsRoot, { withFileTypes: true });
-  const years = entries
-    .filter((e) => e.isDirectory() && /^\d{4}$/.test(e.name))
-    .map((e) => Number(e.name))
-    .sort((a, b) => b - a);
-
+  const files = await walk(reportsRoot);
   const items = [];
 
-  for (const year of years) {
-    const yearDir = path.join(reportsRoot, String(year));
-    let files = [];
-    try {
-      files = await fs.readdir(yearDir);
-    } catch {
-      continue;
+  for (const abs of files) {
+    const relFromPublic = path.relative(publicDir, abs);   // e.g. reports/2025/foo.pdf or reports/2013-2021/...
+    const href = "/" + relFromPublic.split(path.sep).join("/");
+
+    const file = path.basename(abs);
+    let stat = null;
+    try { stat = await fs.stat(abs); } catch {}
+
+    const title = prettyTitle(file);
+    const dateFromName = inferDateFromName(file);
+
+    let date = dateFromName;
+    if (!date && stat?.mtime) {
+      const d = new Date(stat.mtime);
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      date = `${d.getFullYear()}-${mm}-${dd}`;
     }
 
-    for (const file of files) {
-      if (!file.toLowerCase().endsWith(".pdf")) continue;
+    const year = inferYearFromPath(relFromPublic, date);
 
-      const abs = path.join(yearDir, file);
-      let stat = null;
-      try {
-        stat = await fs.stat(abs);
-      } catch {}
-
-      // Title from filename
-      const pretty = file
-        .replace(/_/g, " ")
-        .replace(/-/g, " ")
-        .replace(/\.pdf$/i, "");
-
-      // Try to parse date (YYYY[-_]MM[-_]DD) from filename; fallback to mtime; else Jan 1
-      let isoDate = `${year}-01-01`;
-      const m = file.match(/(20\d{2})[-_\.]?(0[1-9]|1[0-2])[-_\.]?(0[1-9]|[12]\d|3[01])/);
-      if (m) {
-        const [, y, mo, d] = m;
-        isoDate = `${y}-${mo}-${d}`;
-      } else if (stat?.mtime) {
-        const d = new Date(stat.mtime);
-        const mm = String(d.getMonth() + 1).padStart(2, "0");
-        const dd = String(d.getDate()).padStart(2, "0");
-        isoDate = `${d.getFullYear()}-${mm}-${dd}`;
-      }
-
-      const size_bytes = stat?.size;
-
-      items.push({
-        href: `/reports/${year}/${file}`,
-        title: pretty,
-        year,
-        date: isoDate,
-        size_bytes
-      });
-    }
+    items.push({
+      href,
+      title,
+      year,
+      date,
+      size_bytes: stat?.size,
+    });
   }
 
-  // Sort: newest date first, then title
+  // newest first by date, then by title
   items.sort((a, b) => {
     const da = a.date ?? "1970-01-01";
     const db = b.date ?? "1970-01-01";
     if (db !== da) return db.localeCompare(da);
     return (a.title || "").localeCompare(b.title || "");
   });
+
+  const yearsSet = new Set(items.map(i => i.year).filter(Boolean));
+  const years = Array.from(yearsSet).sort((a, b) => b - a);
 
   await writeManifest({ items, years });
   console.log(`Wrote manifest with ${items.length} items across years: ${years.join(", ")}`);
@@ -91,7 +117,7 @@ async function writeManifest(obj) {
   const outDir = path.join(process.cwd(), "public", "reports");
   const out = path.join(outDir, "manifest.json");
   try { await fs.mkdir(outDir, { recursive: true }); } catch {}
-  await fs.writeFile(out, JSON.stringify(obj, null, 2));
+  await fs.writeFile(out, JSON.stringify(obj, null, 2), "utf8");
 }
 
 main().catch((err) => {
